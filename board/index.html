@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I AM Church — Comparison Board</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html{background:#f3f2f2}
+  body{margin:0;font-family:system-ui,sans-serif;background:#f3f2f2;color:#201f1d;min-height:100vh}
+
+  .topbar{
+    position:sticky;top:0;z-index:10;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:14px 20px;border-bottom:1px solid #ddd;
+    background:rgba(243,242,242,.92);backdrop-filter:blur(8px);
+  }
+  .topbar h1{font-size:16px;margin:0;margin-right:auto;letter-spacing:-.01em}
+  .topbar a.back{font-size:13px;color:#5c5c5c;text-decoration:none}
+  .topbar a.back:hover{text-decoration:underline}
+
+  .ctl{display:flex;align-items:center;gap:7px;font-size:13px;color:#3a3a3a}
+  .ctl input[type="checkbox"]{width:15px;height:15px;accent-color:#b68235}
+
+  select#heightSel{
+    font-size:13px;padding:5px 8px;border-radius:6px;border:1px solid #ccc;background:#fff;color:#201f1d;
+  }
+
+  .board{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:2px;background:#ccc;
+  }
+  .pane{background:#fff;display:flex;flex-direction:column;min-width:0}
+  .pane__head{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 14px;border-bottom:1px solid #e5e5e5;
+    font-size:13px;background:#fafafa;
+  }
+  .pane__dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .v0 .pane__dot{background:#b68235}
+  .v1 .pane__dot{background:#0a0a0a}
+  .v2 .pane__dot{background:#c1512f}
+  .v4 .pane__dot{background:#153f3f}
+  .pane__name{font-weight:600;margin-right:auto}
+  .pane__open{color:#5c5c5c;text-decoration:none;font-size:12px}
+  .pane__open:hover{text-decoration:underline}
+  .pane__frame-wrap{position:relative;flex:1;overflow:hidden}
+  iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+
+  @media (max-width:900px){
+    .board{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../">← All versions</a>
+  <h1>Comparison board</h1>
+  <label class="ctl"><input type="checkbox" id="syncScroll" checked> Sync scroll</label>
+  <label class="ctl">Pane height
+    <select id="heightSel">
+      <option value="60">Short</option>
+      <option value="85" selected>Tall</option>
+      <option value="100">Full screen</option>
+    </select>
+  </label>
+</div>
+
+<div class="board" id="board">
+  <div class="pane v0" data-src="../v0/">
+    <div class="pane__head"><span class="pane__dot"></span><span class="pane__name">Original</span><a class="pane__open" href="../v0/" target="_blank" rel="noopener">Open ↗</a></div>
+    <div class="pane__frame-wrap"><iframe loading="lazy"></iframe></div>
+  </div>
+  <div class="pane v1" data-src="../v1/">
+    <div class="pane__head"><span class="pane__dot"></span><span class="pane__name">Phase 1 — Elevation</span><a class="pane__open" href="../v1/" target="_blank" rel="noopener">Open ↗</a></div>
+    <div class="pane__frame-wrap"><iframe loading="lazy"></iframe></div>
+  </div>
+  <div class="pane v2" data-src="../v2/">
+    <div class="pane__head"><span class="pane__dot"></span><span class="pane__name">Phase 2 — Clay</span><a class="pane__open" href="../v2/" target="_blank" rel="noopener">Open ↗</a></div>
+    <div class="pane__frame-wrap"><iframe loading="lazy"></iframe></div>
+  </div>
+  <div class="pane v4" data-src="../v4/">
+    <div class="pane__head"><span class="pane__dot"></span><span class="pane__name">Phase 3 — Gather</span><a class="pane__open" href="../v4/" target="_blank" rel="noopener">Open ↗</a></div>
+    <div class="pane__frame-wrap"><iframe loading="lazy"></iframe></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var panes = [].slice.call(document.querySelectorAll('.pane'));
+  var frames = panes.map(function(p){
+    var f = p.querySelector('iframe');
+    f.src = p.getAttribute('data-src');
+    return f;
+  });
+
+  // ---- pane height control ----
+  var heightSel = document.getElementById('heightSel');
+  function applyHeight(){
+    var vh = heightSel.value;
+    document.querySelectorAll('.pane__frame-wrap').forEach(function(w){
+      w.style.height = vh + 'vh';
+    });
+  }
+  heightSel.addEventListener('change', applyHeight);
+  applyHeight();
+
+  // ---- synced scrolling across same-origin iframes ----
+  // Each frame gets its own "ignore next scroll" flag rather than one shared
+  // mutex: a shared guard reset via requestAnimationFrame races against the
+  // other iframes' async scroll events (their 'scroll' fires on the next
+  // tick, sometimes after the guard already reset), which caused feedback
+  // loops where panes fought each other instead of settling in sync.
+  var syncOn = true;
+  document.getElementById('syncScroll').addEventListener('change', function(e){
+    syncOn = e.target.checked;
+  });
+
+  var ignoreNext = frames.map(function(){ return false; });
+
+  function attachSync(frame, idx){
+    frame.addEventListener('load', function(){
+      var win;
+      try { win = frame.contentWindow; } catch (err) { return; }
+      if (!win) return;
+      win.addEventListener('scroll', function(){
+        if (ignoreNext[idx]) { ignoreNext[idx] = false; return; }
+        if (!syncOn) return;
+        var doc = win.document.documentElement;
+        var max = doc.scrollHeight - win.innerHeight;
+        var frac = max > 0 ? win.scrollY / max : 0;
+        frames.forEach(function(other, j){
+          if (j === idx) return;
+          try {
+            var ow = other.contentWindow;
+            var od = ow.document.documentElement;
+            var omax = od.scrollHeight - ow.innerHeight;
+            ignoreNext[j] = true;
+            ow.scrollTo(0, frac * omax);
+          } catch (err) {}
+        });
+      }, { passive: true });
+    });
+  }
+  frames.forEach(attachSync);
+})();
+</script>
+
+</body>
+</html>
