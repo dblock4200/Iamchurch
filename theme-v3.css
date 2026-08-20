@@ -1,0 +1,131 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   I AM — PHASE 3 THEME  ("Gather" system)
+   Design tokens ported from gatherasheville.org's actual visual language:
+   dark slate-navy canvas, warm cream/parchment paper, a deep teal accent,
+   bold uppercase Montserrat display type over a humanist-grotesque body,
+   and sharp, square (zero-radius) controls throughout. Content, structure,
+   and page hierarchy are untouched; this file only overrides design tokens
+   already threaded through every page's inline CSS via var().
+
+   Load order: after each page's inline <style> block (so these :root
+   redefinitions win by source order) and before micro.css.
+   ══════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: light;
+
+  /* — surface & text — */
+  --color-bg: #ebe7dc;
+  --color-surface: #ded8c6;
+  --color-text: #0f172a;
+  --color-accent: #153f3f;
+  --color-accent-2: #153f3f;
+  --color-divider: color-mix(in srgb, #0f172a 16%, transparent);
+
+  /* — neutral ramp — */
+  --color-neutral-100: #f7f5ee;
+  --color-neutral-200: #ebe7dc;
+  --color-neutral-300: #d3cdb9;
+  --color-neutral-400: #b0a98e;
+  --color-neutral-500: #8c8468;
+  --color-neutral-600: #6b6450;
+  --color-neutral-700: #4a4638;
+  --color-neutral-800: #2b2921;
+  --color-neutral-900: #16150f;
+
+  /* — accent ramp: deep teal — */
+  --color-accent-100: #e4efed;
+  --color-accent-200: #bcd8d4;
+  --color-accent-300: #8fbdb6;
+  --color-accent-400: #5c9990;
+  --color-accent-500: #337971;
+  --color-accent-600: #1f5c55;
+  --color-accent-700: #153f3f;
+  --color-accent-800: #0d2b2b;
+  --color-accent-900: #061717;
+
+  --color-accent-2-100: #e4efed;
+  --color-accent-2-200: #bcd8d4;
+  --color-accent-2-300: #8fbdb6;
+  --color-accent-2-400: #5c9990;
+  --color-accent-2-500: #337971;
+  --color-accent-2-600: #1f5c55;
+  --color-accent-2-700: #153f3f;
+  --color-accent-2-800: #0d2b2b;
+  --color-accent-2-900: #061717;
+
+  /* — type: bold uppercase display over a plain humanist body — */
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-heading-weight: 800;
+  --font-body: "Work Sans", system-ui, sans-serif;
+
+  /* — spacing: unchanged — */
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  /* — radius: sharp, architectural — zero everywhere — */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
+
+  /* — elevation — */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #0f172a 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #0f172a 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #0f172a 22%, transparent);
+}
+
+html { background: var(--color-bg); }
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+::selection { background: color-mix(in srgb, var(--color-accent) 26%, transparent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #0f172a 22%, transparent) !important; }
+
+/* Photography: crisp, unframed, no sepia */
+.plate {
+  filter: none !important;
+  border-color: var(--color-surface) !important;
+  outline-color: var(--color-divider) !important;
+  border-radius: 0 !important;
+}
+.img-slot {
+  background: linear-gradient(135deg, var(--color-accent-800), var(--color-neutral-900)) !important;
+  color: color-mix(in srgb, #fff 80%, transparent) !important;
+}
+
+/* Buttons: sharp squares, uppercase Montserrat labels */
+.abtn, a.abtn, button.abtn {
+  border-radius: 0 !important;
+  padding: 15px 30px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px !important;
+}
+.abtn:hover { transform: translateY(-2px); }
+
+/* Cards, tags, inputs follow the same sharp language */
+.lift, .card, article.lift { border-radius: 0 !important; }
+.tag { border-radius: 0 !important; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border-color: var(--color-accent); color: var(--color-accent); }
+
+input, select, textarea, .inu, .in, .input, .custin, .gsel, .msel {
+  border-radius: 0 !important;
+  background: var(--color-neutral-100) !important;
+  border-color: var(--color-divider) !important;
+}
+
+/* Kickers/eyebrows read as bold uppercase tracked labels, matching Gather's
+   headline treatment rather than the thin serif-adjacent kickers elsewhere */
+h1, h2, h3 { font-weight: var(--font-heading-weight); }
+
+@media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
