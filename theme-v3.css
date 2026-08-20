@@ -167,11 +167,12 @@ h1, h2, h3, h4, h5, h6 {
 .tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
 .tag-outline { border-color: var(--color-accent); color: var(--color-accent); }
 
-input, select, textarea, .inu, .in, .input, .custin, .gsel, .msel {
-  border-radius: 0 !important;
-  background: var(--color-neutral-100) !important;
-  border-color: var(--color-divider) !important;
-}
+/* Form fields need no override here. The shared .field-input component in
+   micro.css derives its surface from --color-neutral-100 and its corner from
+   --radius-md, both of which this theme already sets (parchment; 0px) — so
+   fields come out sharp and Gather-toned on their own. The old block that
+   lived here forced `background … !important`, which would now freeze the
+   field's hover/focus/filled/error surfaces at a single flat color. */
 
 /* Kickers/eyebrows read as bold uppercase tracked labels, matching Gather's
    headline treatment rather than the thin serif-adjacent kickers elsewhere */
