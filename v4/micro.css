@@ -1,0 +1,134 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   I AM — MICRO-INTERACTION LAYER  (shared across every page)
+
+   A calibrated hierarchy, most of the weight in the first two tiers:
+     · SUBTLE       quiet, site-wide feedback (press, focus, underline, tags)
+     · INTERACTIVE  deliberate responses on key affordances (magnetic CTAs,
+                    cursor-aware cards, image depth, nav-on-scroll)
+     · CINEMATIC    reserved moments (hero word-reveal; the homepage's pinned
+                    scroll scenes live in index.html)
+
+   Builds on the tokens + base classes each page already defines inline, so
+   every var() resolves. Pure enhancement: each effect degrades to a usable
+   static control. Motion is gated behind (prefers-reduced-motion:no-preference);
+   anything cursor-driven additionally requires a fine pointer.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --mi-ease: cubic-bezier(.22,1,.36,1);
+  --mi-ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+/* ══════════ SUBTLE ═══════════════════════════════════════════════════════ */
+
+/* Tactile press — every button-like control acknowledges the tap */
+@media (prefers-reduced-motion: no-preference){
+  .abtn, button, .chip, .helpopt, .sdot,
+  [data-freq], [data-amt], [data-method]{
+    transition: transform .18s var(--mi-ease), background-color .25s ease,
+                border-color .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  button:not(:disabled):active,
+  .chip:active, .helpopt:active, .sdot:active,
+  [data-freq]:active, [data-amt]:active, [data-method]:active{ transform: scale(.96); }
+  .abtn:active, a.abtn:active{ transform: scale(.97); }
+}
+
+/* Segmented toggles / chips — smooth the .on / .active state change instead of
+   snapping (these pages toggle those classes from their own scripts) */
+.chip, [data-freq], [data-amt], [data-method], .helpopt, .seg-opt, .sdot, .gsel, .msel{
+  transition: background-color .25s ease, color .25s ease,
+              border-color .25s ease, box-shadow .25s ease;
+}
+
+/* Tag hover */
+@media (prefers-reduced-motion: no-preference){
+  .tag-outline{ transition: background-color .25s ease, color .25s ease; }
+  .tag-outline:hover{ background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+}
+
+/* A center-growing underline for standout inline links (opt-in) */
+.mi-undl-c{
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat; background-position: 50% 100%; background-size: 0% 1.5px;
+  transition: background-size .4s var(--mi-ease);
+}
+.mi-undl-c:hover{ background-size: 100% 1.5px; }
+
+/* Form controls — a calm focus ring + surface shift, layered as box-shadow so it
+   never fights each control's own inline border */
+@media (prefers-reduced-motion: no-preference){
+  input, select, textarea,
+  .inu, .in, .input, .custin, .gsel, .msel{
+    transition: border-color .2s ease, box-shadow .25s var(--mi-ease), background-color .2s ease;
+  }
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible,
+.inu:focus-visible, .in:focus-visible, .custin:focus-visible,
+.gsel:focus-visible, .msel:focus-visible{
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+/* Image hover depth — the framed plate warms & the fill eases in a touch.
+   Zoom is skipped on ken-burns fills (.ks) to avoid a transform tug-of-war. */
+@media (prefers-reduced-motion: no-preference) and (pointer: fine){
+  .plate{ overflow: hidden; transition: filter .45s var(--mi-ease); }
+  .plate .img-slot{ transition: transform .6s var(--mi-ease); }
+  .lift:hover .plate, a:hover > .plate, .mi-img:hover .plate{
+    filter: sepia(.18) saturate(.9) contrast(1.06) brightness(1.05);
+  }
+  .lift:hover .plate .img-slot:not(.ks),
+  .mi-img:hover .plate .img-slot:not(.ks){ transform: scale(1.05); }
+}
+
+/* ══════════ INTERACTIVE ══════════════════════════════════════════════════ */
+
+/* Cards respond to the cursor — the drop shadow leans away from the pointer.
+   --mi-sx / --mi-sy are written per-card by micro.js (fine pointer only). */
+@media (prefers-reduced-motion: no-preference) and (pointer: fine){
+  .lift{ --mi-sx: 0; --mi-sy: 0; }
+  .lift:hover{
+    box-shadow: calc(var(--mi-sx) * 10px) calc(12px + var(--mi-sy) * 10px) 34px
+                color-mix(in srgb, #2d2b2b 22%, transparent);
+  }
+}
+
+/* Magnetic buttons — micro.js adds .mi-magnetic to filled primary CTAs and
+   drives transform; the snappy override keeps the pull from feeling laggy */
+.mi-magnetic{ transition: transform .22s var(--mi-ease-out); will-change: transform; }
+
+/* Navigation condenses & grounds itself once you leave the top */
+.topnav{ transition: padding .3s var(--mi-ease), box-shadow .3s ease, background-color .3s ease; }
+.topnav.mi-nav-scrolled{
+  padding-top: 12px !important; padding-bottom: 12px !important;
+  background: color-mix(in srgb, var(--color-bg) 92%, transparent) !important;
+  box-shadow: 0 1px 0 var(--color-divider), 0 8px 24px color-mix(in srgb, #2d2b2b 9%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+/* ══════════ CHROME + CINEMATIC ═══════════════════════════════════════════ */
+
+/* Scroll progress — a hairline of accent along the very top */
+.mi-progress{
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-400));
+  z-index: 60; pointer-events: none;
+  transition: width .1s linear;
+}
+
+/* Hero word-reveal (opt-in via micro.js on a page's lead H1) */
+.mi-reveal-w{ display: inline-block; }
+@media (prefers-reduced-motion: no-preference){
+  .mi-reveal .mi-reveal-w{
+    opacity: 0; transform: translateY(.5em);
+    animation: mi-word-in .7s var(--mi-ease-out) forwards;
+    animation-delay: calc(var(--mi-i, 0) * 55ms);
+  }
+}
+@keyframes mi-word-in{ to{ opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce){
+  .mi-progress{ transition: none; }
+}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Events — I AM Church</title>
+<meta name="description" content="Upcoming events at I AM Church, Avondale Campus, Austin TX. Serve days, baptisms, dinners, and more.">
+<style>
+/* I AM Church — design-system tokens and component classes.
+   Ported from the "Classical" Claude Design system (styles.css). */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap');
+
+:root {
+  color-scheme: light;
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201f1d;
+  --color-accent: #b68235;
+  --color-accent-2: #ac803e;
+  --color-divider: color-mix(in srgb, #201f1d 16%, transparent);
+
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #fff3e4;
+  --color-accent-200: #ffe3bf;
+  --color-accent-300: #facb8d;
+  --color-accent-400: #e1ad66;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #a06f24;
+  --color-accent-700: #7d5411;
+  --color-accent-800: #5a3b0a;
+  --color-accent-900: #3a270d;
+
+  --color-accent-2-100: #fff3e4;
+  --color-accent-2-200: #ffe3be;
+  --color-accent-2-300: #f5cd96;
+  --color-accent-2-400: #dbaf70;
+  --color-accent-2-500: #bc8f4e;
+  --color-accent-2-600: #9b7232;
+  --color-accent-2-700: #79561f;
+  --color-accent-2-800: #573d14;
+  --color-accent-2-900: #382810;
+
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Lora", system-ui, sans-serif;
+
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 7px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: #f3f2f2; }
+body {
+  margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400;
+  background: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-body);
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
+}
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — plate: the framed, tinted image treatment — */
+.plate {
+  filter: sepia(0.22) saturate(0.82) contrast(1.05);
+  box-sizing: border-box;
+  border: 6px solid var(--color-surface);
+  outline: 1px solid var(--color-divider);
+}
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px;
+  letter-spacing: 0.02em; padding: 3px 10px;
+  border-radius: calc(var(--radius-md) * 0.75);
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — image placeholder (implements <image-slot> for design review) — */
+.img-slot {
+  position: relative; width: 100%; height: 100%; min-height: 100%;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--color-accent) 22%, var(--color-surface)),
+      color-mix(in srgb, var(--color-neutral-700) 30%, var(--color-surface)));
+  color: color-mix(in srgb, #fff 82%, transparent);
+  overflow: hidden;
+}
+.img-slot::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,.05) 0 2px, transparent 2px 9px);
+  pointer-events: none;
+}
+.img-slot > span {
+  position: relative; z-index: 1;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: .04em;
+  padding: 8px 14px; max-width: 80%;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Shared interactions — consumed by every page. Page <style> blocks only
+   carry CSS unique to that page (forms, chips, steppers, accordions, …).
+   ══════════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #201f1d 18%, transparent); border-radius: 8px; }
+
+@keyframes upIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes ken { from { transform: scale(1.02); } to { transform: scale(1.13); } }
+.ks { animation: ken 22s ease-in-out infinite alternate; }
+
+.lift { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s, border-color .4s; }
+.lift:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--color-accent); }
+.undl { background-image: linear-gradient(var(--color-accent), var(--color-accent)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px; transition: background-size .4s; }
+.undl:hover { background-size: 100% 1.5px; }
+.abtn { transition: transform .3s cubic-bezier(.2,.7,.2,1), background-color .3s, color .3s, border-color .3s, box-shadow .3s; }
+.abtn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.arrow { display: inline-block; transition: transform .3s; }
+.lift:hover .arrow, .abtn:hover .arrow { transform: translateX(5px); }
+
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+.rv-d1 { transition-delay: .08s; } .rv-d2 { transition-delay: .16s; } .rv-d3 { transition-delay: .24s; }
+
+/* ── Responsive helpers ─────────────────────────────────────────────────
+   !important overrides the inline grid-template-columns the layouts use. */
+@media (max-width: 900px) {
+  .resp { grid-template-columns: 1fr !important; }
+  .resp-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .topnav { gap: 16px !important; flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .resp-2 { grid-template-columns: 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  .rv { opacity: 1; transform: none; transition: none; }
+}
+
+</style>
+<style>
+  .evcard{transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s,border-color .4s}
+  .evcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--color-accent)}
+  .evcard:hover .evtitle{color:var(--color-accent)}
+  .chip{font-family:var(--font-heading);font-size:14px;padding:8px 18px;border:1px solid var(--color-divider);border-radius:999px;background:transparent;color:var(--color-text);cursor:pointer;transition:all .25s;white-space:nowrap}
+  .chip:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .chip.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+  .msel{appearance:none;cursor:pointer;font-family:var(--font-heading);font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:11px 40px 11px 15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b68235' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:border-color .25s}
+  .msel:hover,.msel:focus{outline:none;border-color:var(--color-accent)}
+  @media (max-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr)!important}}
+  @media (max-width:560px){.ev-grid{grid-template-columns:1fr!important}}
+</style>
+<link rel="stylesheet" href="theme-v3.css">
+<link rel="stylesheet" href="micro.css">
+</head>
+<body>
+<div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
+
+  <!-- HEADER -->
+  <nav class="topnav" style="display:flex;align-items:center;gap:28px;padding:18px clamp(20px,5vw,44px);border-bottom:1px solid var(--color-divider);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--color-bg) 90%,transparent);backdrop-filter:blur(8px)">
+    <a href="index.html" style="font-family:var(--font-heading);font-weight:600;letter-spacing:.2em;font-size:22px;color:var(--color-text);text-decoration:none;margin-right:auto">I&nbsp;AM</a>
+    <a class="undl" href="give.html" style="color:inherit;text-decoration:none;font-size:14px">Give</a>
+    <a class="undl" href="groups.html" style="color:inherit;text-decoration:none;font-size:14px">Groups</a>
+    <a class="undl" href="events.html" aria-current="page" style="color:var(--color-accent);text-decoration:none;font-size:14px">Events</a>
+    <a class="undl" href="prayer.html" style="color:inherit;text-decoration:none;font-size:14px">Prayer</a>
+    <a class="undl" href="about.html" style="color:inherit;text-decoration:none;font-size:14px">About</a>
+    <a class="abtn" href="plan-a-visit.html" style="color:#fff;background:var(--color-accent);text-decoration:none;font-size:14px;font-family:var(--font-heading);font-weight:600;padding:9px 20px;border-radius:4px">Plan a visit</a>
+  </nav>
+
+  <!-- PAGE HEAD -->
+  <header style="border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(40px,5vw,60px) clamp(20px,5vw,44px) clamp(28px,3vw,34px)">
+      <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent);margin-bottom:12px;animation:upIn .7s both .1s">Avondale Campus · Austin, TX</div>
+      <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(40px,5.4vw,68px);line-height:1;letter-spacing:-.02em;margin:0 0 16px;animation:upIn .8s both .2s">Upcoming Events</h1>
+      <nav style="font-size:13px;color:color-mix(in srgb,var(--color-text) 55%,transparent);animation:upIn .8s both .32s">
+        <a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a>
+        <span style="margin:0 8px;color:var(--color-accent)">‣</span>
+        <a class="undl" href="index.html" style="color:inherit;text-decoration:none">Avondale, TX</a>
+        <span style="margin:0 8px;color:var(--color-accent)">‣</span>
+        <span style="color:var(--color-text)">Events</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <section style="border-bottom:1px solid var(--color-divider);position:sticky;top:73px;z-index:15;background:color-mix(in srgb,var(--color-bg) 94%,transparent);backdrop-filter:blur(8px)">
+    <div style="max-width:1120px;margin:0 auto;padding:20px clamp(20px,5vw,44px);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Ministry</label>
+        <select class="msel" id="minsel">
+          <option>All Ministries</option><option>Compassion</option><option>Worship</option><option>Next Steps</option><option>Kids</option><option>Small Groups</option><option>Men</option><option>Women</option><option>Young Adults</option><option>Missions</option><option>Prayer</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-right:2px">Type</span>
+        <button type="button" class="chip on" data-type="all">All</button>
+        <button type="button" class="chip" data-type="event">Events</button>
+        <button type="button" class="chip" data-type="groups">Groups</button>
+        <button type="button" class="chip" data-type="signups">Sign-ups</button>
+        <button type="button" class="chip" data-type="volunteer">Volunteer</button>
+        <button type="button" class="chip" data-type="featured">Featured</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT GRID -->
+  <section id="events" style="max-width:1180px;margin:0 auto;padding:clamp(24px,3vw,36px) clamp(20px,5vw,44px) clamp(48px,6vw,72px)">
+    <div id="countLabel" style="font-size:13px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin:0 0 18px">Showing 6 events</div>
+    <div class="ev-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+      <article class="evcard rv evitem" data-cats="event volunteer" data-ministry="Compassion" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Serve day"><span>Serve day</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">14</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jun<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Grace Ave lot</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>9:00 AM</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Neighborhood Serve Day</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-outline">Event</span><span class="tag tag-outline">Volunteer</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">Hands-on projects across Grace Avenue — painting, meals, and yard work for neighbors who need a hand. All ages welcome; lunch provided.</p>
+        </div>
+      </article>
+
+      <article class="evcard rv evitem" data-cats="event featured" data-ministry="Worship" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Baptism lawn"><span>Baptism lawn</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">21</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jun<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>The Lawn</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>After both services</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Baptism Sunday &amp; Potluck</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-accent">Featured</span><span class="tag tag-outline">Event</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">Our biggest celebration of the season — we baptize new believers at both services, then share a potluck lunch under the oaks. Bring a dish and a friend.</p>
+        </div>
+      </article>
+
+      <article class="evcard rv evitem" data-cats="event signups" data-ministry="Next Steps" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Newcomer dinner"><span>Newcomer dinner</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">28</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jun<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Fellowship Hall</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>6:00 PM</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Newcomer Dinner</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-outline">Event</span><span class="tag tag-outline">Sign-ups</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">A relaxed dinner for anyone new to I AM. Meet a pastor, ask your questions, and find your first step. Childcare provided — just let us know.</p>
+        </div>
+      </article>
+
+      <article class="evcard rv evitem" data-cats="signups" data-ministry="Kids" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="VBS camp"><span>VBS camp</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">07</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jul<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Kids Wing</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>9:00 AM – 12:00 PM</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Vacation Bible Camp</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-outline">Sign-ups</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">A week of games, songs, crafts, and story for kindergarten through 5th grade. Registration opens in June and fills fast — reserve a spot early.</p>
+        </div>
+      </article>
+
+      <article class="evcard rv evitem" data-cats="event" data-ministry="Worship" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Night of worship"><span>Night of worship</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">13</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jul<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Sanctuary</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>7:00 PM</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Night of Worship</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-outline">Event</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">An unhurried evening of song, Scripture, and quiet prayer. No sermon, no rush — just space to be still together as the week begins.</p>
+        </div>
+      </article>
+
+      <article class="evcard rv evitem" data-cats="groups signups" data-ministry="Small Groups" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
+        <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Home group"><span>Home group</span></div></div>
+        <div style="padding:20px 22px 24px;display:flex;flex-direction:column;flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:34px;line-height:.9;color:var(--color-accent);font-variant-numeric:tabular-nums">19</span><span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">Jul<br />2026</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;text-align:right;font-size:12px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Neighborhoods citywide</span>
+              <span style="display:flex;gap:6px;align-items:center;justify-content:flex-end"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Various weeknights</span>
+            </div>
+          </div>
+          <h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;line-height:1.12;margin:0 0 12px;transition:color .3s">Home Groups Kickoff</h3>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px"><span class="tag tag-outline">Groups</span><span class="tag tag-outline">Sign-ups</span></div>
+          <p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0">The church gets small around living-room tables. Find a group near you for the fall term — food, friendship, and honest conversation every week.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div id="emptyState" style="display:none;text-align:center;padding:56px 20px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">
+      <p style="font-family:var(--font-heading);font-size:24px;margin:0 0 8px;color:var(--color-text)">Nothing here just yet</p>
+      <p style="font-size:15px;margin:0">No events match this filter — try another ministry or type.</p>
+    </div>
+
+    <div style="text-align:center;margin-top:40px">
+      <a class="abtn" href="#" style="border:1px solid var(--color-accent);color:var(--color-accent);font-family:var(--font-heading);font-weight:600;font-size:15px;padding:13px 30px;border-radius:4px;text-decoration:none">Load more events</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-accent-100);border-top:1px solid var(--color-divider)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(20px,5vw,44px);text-align:center">
+      <h2 class="rv" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(30px,3.8vw,46px);line-height:1.06;max-width:22ch;margin:0 auto 14px;color:var(--color-accent-900)">Never miss what's next.</h2>
+      <p class="rv rv-d1" style="font-size:16px;line-height:1.6;color:var(--color-accent-800);max-width:48ch;margin:0 auto 24px">Get the month ahead in your inbox — one short email, the first of each month.</p>
+      <form class="rv rv-d2" onsubmit="return false" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:460px;margin:0 auto">
+        <input type="email" placeholder="you@email.com" style="flex:1;min-width:220px;box-sizing:border-box;font-family:var(--font-body);font-size:15px;background:var(--color-bg);border:1px solid var(--color-accent);border-radius:4px;padding:13px 15px" />
+        <button type="submit" class="abtn" style="background:var(--color-accent-700);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:15px;padding:13px 26px;border-radius:4px;border:none;cursor:pointer">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid var(--color-divider)"><div class="resp" style="max-width:1120px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,5vw,44px);display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px">
+    <div>
+      <div style="font-family:var(--font-heading);font-weight:600;letter-spacing:.18em;font-size:22px;margin-bottom:12px">I&nbsp;AM</div>
+      <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);max-width:30ch;margin:0">A community learning to follow Jesus together, in the heart of the city.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Gather</span><span>Sundays 9 &amp; 11 AM</span><span>1200 Grace Avenue</span><span>Austin, TX 78701</span></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Connect</span><a class="undl" href="give.html" style="color:inherit;text-decoration:none">Give</a><a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a><a class="undl" href="mailto:hello@iamchurch.org" style="color:inherit;text-decoration:none">hello@iamchurch.org</a></div>
+  </div></footer>
+
+</div>
+
+<script>
+  (function(){
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});}
+    else{
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
+      document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+    }
+    var items=[].slice.call(document.querySelectorAll('.evitem'));
+    var chips=[].slice.call(document.querySelectorAll('[data-type]'));
+    var sel=document.getElementById('minsel');
+    var count=document.getElementById('countLabel');
+    var empty=document.getElementById('emptyState');
+    var type='all';
+    function apply(){
+      var min=sel.value; var shown=0;
+      items.forEach(function(it){
+        var cats=it.getAttribute('data-cats').split(' ');
+        var m=(type==='all'||cats.indexOf(type)>-1)&&(min==='All Ministries'||it.getAttribute('data-ministry')===min);
+        it.style.display=m?'':'none'; if(m)shown++;
+      });
+      count.textContent='Showing '+shown+' event'+(shown===1?'':'s');
+      empty.style.display=shown===0?'':'none';
+    }
+    chips.forEach(function(btn){btn.addEventListener('click',function(){chips.forEach(function(c){c.classList.remove('on');});btn.classList.add('on');type=btn.getAttribute('data-type');apply();});});
+    sel.addEventListener('change',apply);
+  })();
+</script>
+<script src="micro.js" defer></script>
+</body>
+</html>
