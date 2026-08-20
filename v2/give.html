@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Give — I AM Church</title>
+<meta name="description" content="See what God can do through your generosity. Give to I AM Church — tithes, offerings, outreach, and more.">
+<style>
+/* I AM Church — design-system tokens and component classes.
+   Ported from the "Classical" Claude Design system (styles.css). */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap');
+
+:root {
+  color-scheme: light;
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201f1d;
+  --color-accent: #b68235;
+  --color-accent-2: #ac803e;
+  --color-divider: color-mix(in srgb, #201f1d 16%, transparent);
+
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #fff3e4;
+  --color-accent-200: #ffe3bf;
+  --color-accent-300: #facb8d;
+  --color-accent-400: #e1ad66;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #a06f24;
+  --color-accent-700: #7d5411;
+  --color-accent-800: #5a3b0a;
+  --color-accent-900: #3a270d;
+
+  --color-accent-2-100: #fff3e4;
+  --color-accent-2-200: #ffe3be;
+  --color-accent-2-300: #f5cd96;
+  --color-accent-2-400: #dbaf70;
+  --color-accent-2-500: #bc8f4e;
+  --color-accent-2-600: #9b7232;
+  --color-accent-2-700: #79561f;
+  --color-accent-2-800: #573d14;
+  --color-accent-2-900: #382810;
+
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Lora", system-ui, sans-serif;
+
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 7px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: #f3f2f2; }
+body {
+  margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400;
+  background: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-body);
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
+}
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — plate: the framed, tinted image treatment — */
+.plate {
+  filter: sepia(0.22) saturate(0.82) contrast(1.05);
+  box-sizing: border-box;
+  border: 6px solid var(--color-surface);
+  outline: 1px solid var(--color-divider);
+}
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px;
+  letter-spacing: 0.02em; padding: 3px 10px;
+  border-radius: calc(var(--radius-md) * 0.75);
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — image placeholder (implements <image-slot> for design review) — */
+.img-slot {
+  position: relative; width: 100%; height: 100%; min-height: 100%;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--color-accent) 22%, var(--color-surface)),
+      color-mix(in srgb, var(--color-neutral-700) 30%, var(--color-surface)));
+  color: color-mix(in srgb, #fff 82%, transparent);
+  overflow: hidden;
+}
+.img-slot::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,.05) 0 2px, transparent 2px 9px);
+  pointer-events: none;
+}
+.img-slot > span {
+  position: relative; z-index: 1;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: .04em;
+  padding: 8px 14px; max-width: 80%;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Shared interactions — consumed by every page. Page <style> blocks only
+   carry CSS unique to that page (forms, chips, steppers, accordions, …).
+   ══════════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #201f1d 18%, transparent); border-radius: 8px; }
+
+@keyframes upIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes ken { from { transform: scale(1.02); } to { transform: scale(1.13); } }
+.ks { animation: ken 22s ease-in-out infinite alternate; }
+
+.lift { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s, border-color .4s; }
+.lift:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--color-accent); }
+.undl { background-image: linear-gradient(var(--color-accent), var(--color-accent)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px; transition: background-size .4s; }
+.undl:hover { background-size: 100% 1.5px; }
+.abtn { transition: transform .3s cubic-bezier(.2,.7,.2,1), background-color .3s, color .3s, border-color .3s, box-shadow .3s; }
+.abtn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.arrow { display: inline-block; transition: transform .3s; }
+.lift:hover .arrow, .abtn:hover .arrow { transform: translateX(5px); }
+
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+.rv-d1 { transition-delay: .08s; } .rv-d2 { transition-delay: .16s; } .rv-d3 { transition-delay: .24s; }
+
+/* ── Responsive helpers ─────────────────────────────────────────────────
+   !important overrides the inline grid-template-columns the layouts use. */
+@media (max-width: 900px) {
+  .resp { grid-template-columns: 1fr !important; }
+  .resp-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .topnav { gap: 16px !important; flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .resp-2 { grid-template-columns: 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  .rv { opacity: 1; transform: none; transition: none; }
+}
+
+</style>
+<style>
+  .seg{display:flex;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden}
+  .seg button{flex:1;font-family:var(--font-heading);font-size:15px;padding:12px;background:var(--color-bg);border:none;border-right:1px solid var(--color-divider);color:var(--color-text);cursor:pointer;transition:background-color .25s,color .25s}
+  .seg button:last-child{border-right:none}
+  .seg button.on{background:var(--color-accent);color:#fff}
+  .seg button:not(.on):hover{background:var(--color-accent-100)}
+  .amt{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .amt button{font-family:var(--font-heading);font-size:20px;padding:16px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;color:var(--color-text);cursor:pointer;transition:all .25s;font-variant-numeric:tabular-nums}
+  .amt button:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .amt button.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+  .gsel{width:100%;box-sizing:border-box;appearance:none;cursor:pointer;font-family:var(--font-body);font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:13px 40px 13px 14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b68235' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:border-color .25s}
+  .gsel:hover,.gsel:focus{outline:none;border-color:var(--color-accent)}
+  .custin{width:100%;box-sizing:border-box;font-family:var(--font-heading);font-size:26px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:12px 14px 12px 40px;transition:border-color .25s}
+  .custin:focus{outline:none;border-color:var(--color-accent)}
+  .faq summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--font-heading);font-weight:400;font-size:20px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq .pm{flex:none;width:24px;height:24px;position:relative;transition:transform .3s}
+  .faq .pm::before,.faq .pm::after{content:"";position:absolute;background:var(--color-accent);border-radius:2px}
+  .faq .pm::before{top:11px;left:3px;right:3px;height:2px}
+  .faq .pm::after{left:11px;top:3px;bottom:3px;width:2px;transition:opacity .3s}
+  .faq details[open] .pm::after{opacity:0}
+  .faq details[open] .pm{transform:rotate(180deg)}
+  .faq p{margin:0 0 20px;font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:70ch}
+  @media (max-width:900px){.give-hero{grid-template-columns:1fr!important}.ways-grid{grid-template-columns:repeat(2,1fr)!important}.impact-grid{grid-template-columns:1fr!important}.res-grid{grid-template-columns:1fr!important}.ways-feature{grid-row:auto!important}}
+  @media (max-width:560px){.ways-grid{grid-template-columns:1fr!important}}
+</style>
+<link rel="stylesheet" href="theme-v1.css">
+<link rel="stylesheet" href="micro.css">
+</head>
+<body>
+<div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
+
+  <!-- HEADER -->
+  <nav class="topnav" style="display:flex;align-items:center;gap:28px;padding:18px clamp(20px,5vw,44px);border-bottom:1px solid var(--color-divider);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--color-bg) 90%,transparent);backdrop-filter:blur(8px)">
+    <a href="index.html" style="font-family:var(--font-heading);font-weight:600;letter-spacing:.2em;font-size:22px;color:var(--color-text);text-decoration:none;margin-right:auto">I&nbsp;AM</a>
+    <a class="undl" href="give.html" aria-current="page" style="color:var(--color-accent);text-decoration:none;font-size:14px">Give</a>
+    <a class="undl" href="groups.html" style="color:inherit;text-decoration:none;font-size:14px">Groups</a>
+    <a class="undl" href="events.html" style="color:inherit;text-decoration:none;font-size:14px">Events</a>
+    <a class="undl" href="prayer.html" style="color:inherit;text-decoration:none;font-size:14px">Prayer</a>
+    <a class="undl" href="about.html" style="color:inherit;text-decoration:none;font-size:14px">About</a>
+    <a class="abtn" href="plan-a-visit.html" style="color:#fff;background:var(--color-accent);text-decoration:none;font-size:14px;font-family:var(--font-heading);font-weight:600;padding:9px 20px;border-radius:4px">Plan a visit</a>
+  </nav>
+
+  <!-- HERO + GIVE CARD -->
+  <header id="give" style="max-width:1120px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(20px,5vw,44px)">
+    <div class="give-hero" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:center">
+      <div>
+        <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent);margin-bottom:16px;animation:upIn .7s both .1s">Giving</div>
+        <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(40px,5.2vw,72px);line-height:1.02;letter-spacing:-.02em;margin:0 0 20px;animation:upIn .8s both .2s">See what God can do through your generosity.</h1>
+        <p style="font-size:18px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 74%,transparent);margin:0;max-width:46ch;animation:upIn .8s both .34s">When you give through tithes and offerings, you're not just making a donation — you're bringing God's love to people here on Grace Avenue and around the world.</p>
+      </div>
+
+      <div class="rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:clamp(24px,3vw,36px);box-shadow:var(--shadow-md);background:var(--color-bg)">
+        <h2 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 22px">Give a gift</h2>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Fund</label>
+          <select class="gsel"><option>Tithes &amp; Offerings</option><option>Building &amp; Expansion</option><option>Outreach &amp; Missions</option><option>Benevolence Fund</option></select>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Frequency</label>
+          <div class="seg" id="freqSeg">
+            <button type="button" class="on" data-freq="one">One-time</button>
+            <button type="button" data-freq="week">Weekly</button>
+            <button type="button" data-freq="month">Monthly</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Amount</label>
+          <div class="amt" id="amtGrid" style="margin-bottom:12px">
+            <button type="button" data-amt="25">$25</button>
+            <button type="button" data-amt="50">$50</button>
+            <button type="button" class="on" data-amt="100">$100</button>
+            <button type="button" data-amt="250">$250</button>
+            <button type="button" data-amt="500">$500</button>
+            <button type="button" data-amt="1000">$1000</button>
+          </div>
+          <div style="position:relative">
+            <span style="position:absolute;left:15px;top:50%;transform:translateY(-50%);font-family:var(--font-heading);font-size:22px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">$</span>
+            <input class="custin" id="customAmt" type="text" inputmode="decimal" placeholder="Other amount" />
+          </div>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Method</label>
+          <div class="seg" id="methodSeg">
+            <button type="button" class="on" data-method="card">Card / Bank</button>
+            <button type="button" data-method="crypto">Crypto</button>
+            <button type="button" data-method="stock">Stocks</button>
+          </div>
+        </div>
+
+        <button type="button" id="giveBtn" class="abtn" style="width:100%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:17px;padding:16px;border-radius:4px;border:none;cursor:pointer">Give $100 <span class="arrow">→</span></button>
+        <div style="display:flex;justify-content:space-between;margin-top:16px;font-size:13px">
+          <a class="undl" href="#" style="color:var(--color-accent);text-decoration:none">Manage your account</a>
+          <a class="undl" href="#faqs" style="color:var(--color-accent);text-decoration:none">View the FAQs</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MANY WAYS TO GIVE -->
+  <section style="border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,44px)">
+      <div class="rv" style="max-width:56ch;margin-bottom:36px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);margin-bottom:12px">However works for you</div>
+        <h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(30px,3.6vw,44px);line-height:1.06;margin:0 0 12px">There are many ways to give</h2>
+        <p style="font-size:16px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0">Everyone manages their finances differently — so we've kept every method simple and secure.</p>
+      </div>
+      <div class="ways-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <div class="lift rv ways-feature" style="grid-column:1;grid-row:span 2;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:32px 28px;display:flex;flex-direction:column">
+          <span style="color:var(--color-accent);margin-bottom:16px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 10px">The I AM app</h3>
+          <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 20px">Give in a couple of taps, set a recurring gift, and see your history — all from your phone.</p>
+          <div class="plate" style="aspect-ratio:3/4;overflow:hidden;border-radius:4px;margin-top:auto;max-width:200px"><div class="img-slot ks" role="img" aria-label="App giving screen mockup"><span>App giving screen mockup</span></div></div>
+        </div>
+        <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
+          <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0 0 12px">Text giving</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-family:var(--font-heading);color:var(--color-accent);font-size:18px">1</span><p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Text <strong style="font-family:var(--font-heading)">IAM 50</strong> to <strong style="font-family:var(--font-heading)">77977</strong> for a $50 gift.</p></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-family:var(--font-heading);color:var(--color-accent);font-size:18px">2</span><p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">After setup, just text an <strong style="font-family:var(--font-heading)">amount</strong> to give again.</p></div>
+          </div>
+        </div>
+        <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
+          <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7v14H6V7l6-3z"/><path d="M12 2v5"/><path d="M10 4h4"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0 0 8px">In person</h3>
+          <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Give during either Sunday service at the boxes by the doors.</p>
+        </div>
+        <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
+          <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0 0 8px">By mail</h3>
+          <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Attn: Finance · I AM Church · 1200 Grace Avenue, Austin, TX 78701.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,44px)">
+    <div class="rv" style="text-align:center;margin-bottom:40px">
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);margin-bottom:12px">Your generosity at work</div>
+      <h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(30px,3.6vw,44px);margin:0">Witness the power of a gift</h2>
+    </div>
+    <div class="impact-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <article class="rv">
+        <div class="plate" style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;margin-bottom:18px"><div class="img-slot ks" role="img" aria-label="The church building"><span>The church building</span></div></div>
+        <div style="font-family:var(--font-heading);font-size:40px;line-height:1;color:var(--color-accent);font-variant-numeric:tabular-nums;margin-bottom:10px">2003</div>
+        <h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;line-height:1.12;margin:0 0 8px">God is moving, and we're growing</h3>
+        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Your tithe is an investment in God's vision — spaces where people find hope, healing, and purpose.</p>
+      </article>
+      <article class="rv rv-d1">
+        <div class="plate" style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;margin-bottom:18px"><div class="img-slot ks" role="img" aria-label="Outreach / a well"><span>Outreach / a well</span></div></div>
+        <div style="font-family:var(--font-heading);font-size:40px;line-height:1;color:var(--color-accent);font-variant-numeric:tabular-nums;margin-bottom:10px">48%</div>
+        <h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;line-height:1.12;margin:0 0 8px">Meeting needs near and far</h3>
+        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Nearly half of every gift supports outreach — food for the hungry, shelter, and crisis care at home and abroad.</p>
+      </article>
+      <article class="rv rv-d2">
+        <div class="plate" style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;margin-bottom:18px"><div class="img-slot ks" role="img" aria-label="Baptism celebration"><span>Baptism celebration</span></div></div>
+        <div style="font-family:var(--font-heading);font-size:40px;line-height:1;color:var(--color-accent);font-variant-numeric:tabular-nums;margin-bottom:10px">1,200+</div>
+        <h3 style="font-family:var(--font-heading);font-weight:400;font-size:24px;line-height:1.12;margin:0 0 8px">Bringing the hope of Jesus</h3>
+        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Every gift helps us reach people far from God. Every salvation and baptism is a story your generosity helped write.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section style="background:var(--color-neutral-100);border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(20px,5vw,44px)">
+      <div class="rv" style="margin-bottom:32px"><h2 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,40px);margin:0">Resources &amp; accountability</h2></div>
+      <div class="res-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <article class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:30px 28px;background:var(--color-bg);display:flex;flex-direction:column;gap:10px">
+          <span style="color:var(--color-accent);margin-bottom:6px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0">Annual report</h3>
+          <p style="font-size:14px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0;flex:1">Every metric tells a story. See the impact of this year's generosity.</p>
+          <a class="undl" href="#" style="font-size:13px;color:var(--color-accent);text-decoration:none;margin-top:4px">Read the report <span class="arrow">→</span></a>
+        </article>
+        <article class="lift rv rv-d1" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:30px 28px;background:var(--color-bg);display:flex;flex-direction:column;gap:10px">
+          <span style="color:var(--color-accent);margin-bottom:6px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0">Budgeting tool</h3>
+          <p style="font-size:14px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0;flex:1">Simple tools to help you plan and give with clarity and confidence.</p>
+          <a class="undl" href="#" style="font-size:13px;color:var(--color-accent);text-decoration:none;margin-top:4px">Open the tool <span class="arrow">→</span></a>
+        </article>
+        <article class="lift rv rv-d2" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:30px 28px;background:var(--color-bg);display:flex;flex-direction:column;gap:10px">
+          <span style="color:var(--color-accent);margin-bottom:6px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0">Financial accountability</h3>
+          <p style="font-size:14px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0;flex:1">We hold to high standards of transparency, governance, and integrity in every gift.</p>
+          <a class="undl" href="#" style="font-size:13px;color:var(--color-accent);text-decoration:none;margin-top:4px">View financials <span class="arrow">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faqs" style="max-width:820px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,5vw,44px)">
+    <h2 class="rv" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(28px,3.2vw,40px);text-align:center;margin:0 0 30px">Giving questions</h2>
+    <div class="faq">
+      <details class="rv" style="border-top:1px solid var(--color-divider)"><summary>How do I calculate my tithe?<span class="pm"></span></summary><p>A tithe is the biblical principle of giving the first 10% of your income back to God (Malachi 3:10). If you're just starting, begin there and grow at your own pace.</p></details>
+      <details class="rv" style="border-top:1px solid var(--color-divider)"><summary>What fund should I choose?<span class="pm"></span></summary><p>Tithes &amp; Offerings supports the day-to-day ministry of the church. Building, Outreach, and Benevolence funds direct your gift to a specific purpose.</p></details>
+      <details class="rv" style="border-top:1px solid var(--color-divider)"><summary>How do I edit my recurring gift?<span class="pm"></span></summary><p>Log into your giving account any time to change the amount, date, or payment method — or to pause a recurring gift.</p></details>
+      <details class="rv" style="border-top:1px solid var(--color-divider)"><summary>Will I get a giving statement?<span class="pm"></span></summary><p>Yes — we email an updated statement each quarter. Make sure your contact info is current in your account.</p></details>
+      <details class="rv" style="border-top:1px solid var(--color-divider)"><summary>Can I give if I'm outside the US?<span class="pm"></span></summary><p>Yes. International gifts can be made by major credit card through the online giving link — just leave the mobile field blank.</p></details>
+      <div style="border-top:1px solid var(--color-divider)"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid var(--color-divider)"><div class="resp" style="max-width:1120px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,5vw,44px);display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px">
+    <div>
+      <div style="font-family:var(--font-heading);font-weight:600;letter-spacing:.18em;font-size:22px;margin-bottom:12px">I&nbsp;AM</div>
+      <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);max-width:30ch;margin:0">A community learning to follow Jesus together, in the heart of the city.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Gather</span><span>Sundays 9 &amp; 11 AM</span><span>1200 Grace Avenue</span><span>Austin, TX 78701</span></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Connect</span><a class="undl" href="give.html" style="color:inherit;text-decoration:none">Give</a><a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a><a class="undl" href="mailto:hello@iamchurch.org" style="color:inherit;text-decoration:none">hello@iamchurch.org</a></div>
+  </div></footer>
+
+</div>
+
+<script>
+  (function(){
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});}
+    else{
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
+      document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+    }
+    var state={freq:'one',amt:100,custom:'',method:'card'};
+    var btn=document.getElementById('giveBtn');
+    var custom=document.getElementById('customAmt');
+    function segPick(seg,attr,val){[].slice.call(seg.children).forEach(function(b){b.classList.toggle('on',b.getAttribute(attr)===val);});}
+    function render(){
+      var cur=state.custom?('$'+state.custom):('$'+state.amt);
+      var word={one:'',week:' weekly',month:' monthly'}[state.freq];
+      btn.innerHTML='Give '+cur+word+' <span class="arrow">→</span>';
+    }
+    document.getElementById('freqSeg').addEventListener('click',function(e){var b=e.target.closest('[data-freq]');if(!b)return;state.freq=b.getAttribute('data-freq');segPick(this,'data-freq',state.freq);render();});
+    document.getElementById('methodSeg').addEventListener('click',function(e){var b=e.target.closest('[data-method]');if(!b)return;state.method=b.getAttribute('data-method');segPick(this,'data-method',state.method);render();});
+    document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
+    custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
+    render();
+  })();
+</script>
+<script src="micro.js" defer></script>
+</body>
+</html>

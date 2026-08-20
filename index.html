@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I AM Church — Dev Versions</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html{background:#f3f2f2}
+  body{margin:0;font-family:system-ui,sans-serif;background:#f3f2f2;color:#201f1d;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .wrap{max-width:720px;width:100%}
+  h1{font-size:clamp(28px,4vw,40px);margin:0 0 8px;letter-spacing:-.02em}
+  p.sub{color:#5c5c5c;margin:0 0 40px;font-size:15px;line-height:1.6}
+  .cards{display:grid;gap:16px}
+  a.card{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;border-radius:8px;text-decoration:none;color:inherit;border:1px solid #ddd;transition:transform .2s ease,box-shadow .2s ease}
+  a.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .card h2{font-size:18px;margin:0 0 4px}
+  .card p{font-size:13px;margin:0;color:#666}
+  .arrow{font-size:20px;opacity:.5}
+  .v0{background:#f8f4ec;border-color:#e3d5b8}
+  .v1{background:#0a0a0a;border-color:#0a0a0a;color:#fff}
+  .v1 p{color:#999}
+  .v2{background:#f6f1e7;border-color:#e0c9ab}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>I AM Church — dev versions</h1>
+  <p class="sub">Three builds of the same 8-page site, for comparison. Same content and structure throughout — only the visual design differs between versions.</p>
+  <div class="cards">
+    <a class="card v0" href="./v0/"><div><h2>Original</h2><p>Warm sepia editorial — Cormorant Garamond + Lora, framed imagery</p></div><span class="arrow">→</span></a>
+    <a class="card v1" href="./v1/"><div><h2>Phase 1 — Elevation-inspired</h2><p>Near-black canvas, DM Sans, pill buttons, unframed imagery</p></div><span class="arrow">→</span></a>
+    <a class="card v2" href="./v2/"><div><h2>Phase 2 — Clay</h2><p>Warm paper + terracotta, Bitter + Karla, sharp-edged controls</p></div><span class="arrow">→</span></a>
+  </div>
+</div>
+</body>
+</html>

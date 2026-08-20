@@ -1,0 +1,134 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   I AM — PHASE 1 THEME  ("Elevation" system)
+   Design tokens ported from elevationchurch.org's actual visual language:
+   near-black canvas, pure white type, a single sans-serif family carrying
+   both display and body text, bold pill-shaped controls, zero UI accent
+   color — every bit of color comes from photography. Content, structure,
+   and page hierarchy are untouched; this file only overrides design tokens
+   already threaded through every page's inline CSS via var().
+
+   Load order: after each page's inline <style> block (so these :root
+   redefinitions win by source order) and before micro.css (interaction
+   layer inherits the new palette automatically since it's token-driven).
+   ══════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  /* — surface & text — */
+  --color-bg: #0a0a0a;
+  --color-surface: #161616;
+  --color-text: #ffffff;
+  --color-accent: #ffffff;
+  --color-accent-2: #ffffff;
+  --color-divider: color-mix(in srgb, #ffffff 14%, transparent);
+
+  /* — neutral ramp (dark-first) — */
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e2e2e2;
+  --color-neutral-300: #bdbdbd;
+  --color-neutral-400: #9a9a9a;
+  --color-neutral-500: #7a7a7a;
+  --color-neutral-600: #565656;
+  --color-neutral-700: #333333;
+  --color-neutral-800: #1c1c1c;
+  --color-neutral-900: #050505;
+
+  /* — "accent" ramp: since Elevation carries zero hue, this ramp is a pure
+     tonal (grayscale) scale so every var(--color-accent-NNN) reference
+     across pages still resolves to something legible, just colorless — */
+  --color-accent-100: #f2f2f2;
+  --color-accent-200: #e6e6e6;
+  --color-accent-300: #d0d0d0;
+  --color-accent-400: #aaaaaa;
+  --color-accent-500: #888888;
+  --color-accent-600: #5c5c5c;
+  --color-accent-700: #3a3a3a;
+  --color-accent-800: #202020;
+  --color-accent-900: #0f0f0f;
+
+  --color-accent-2-100: #f2f2f2;
+  --color-accent-2-200: #e6e6e6;
+  --color-accent-2-300: #d0d0d0;
+  --color-accent-2-400: #aaaaaa;
+  --color-accent-2-500: #888888;
+  --color-accent-2-600: #5c5c5c;
+  --color-accent-2-700: #3a3a3a;
+  --color-accent-2-800: #202020;
+  --color-accent-2-900: #0f0f0f;
+
+  /* — type: one family, weight does the work — */
+  --font-heading: "DM Sans", system-ui, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: "DM Sans", system-ui, sans-serif;
+
+  /* — spacing: unchanged scale, this system leans on imagery/type contrast
+     rather than a different rhythm — */
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  /* — radius: bold pill controls, softly rounded imagery — */
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* — elevation: glow, not drop-shadow, on a near-black canvas — */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.6);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.55);
+  --shadow-lg: 0 20px 48px rgba(0,0,0,.6);
+}
+
+html { background: var(--color-bg); }
+body { letter-spacing: -0.005em; }
+h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
+
+/* Selection/scrollbar recolored for the dark canvas */
+::selection { background: color-mix(in srgb, #fff 26%, transparent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #fff 22%, transparent) !important; }
+
+/* Photography goes bold and unframed — drop the sepia "plate" treatment */
+.plate {
+  filter: none !important;
+  border-color: var(--color-surface) !important;
+  outline-color: var(--color-divider) !important;
+  border-radius: var(--radius-md);
+}
+.img-slot {
+  background: linear-gradient(135deg, #1e1e1e, #050505) !important;
+  color: color-mix(in srgb, #fff 70%, transparent) !important;
+}
+
+/* Buttons: bold pill, high-contrast fill/outline — overrides the per-instance
+   inline radius/padding every button already carries */
+.abtn, a.abtn, button.abtn {
+  border-radius: var(--radius-pill) !important;
+  padding: 15px 30px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.005em;
+}
+.abtn:hover { transform: translateY(-2px) scale(1.015); }
+
+/* Cards, tags, inputs: same bold rounding language throughout */
+.lift, .card, article.lift { border-radius: var(--radius-md) !important; }
+.tag { border-radius: var(--radius-pill) !important; font-weight: 700; }
+.tag-accent { background: var(--color-surface); color: var(--color-text); }
+.tag-neutral { background: var(--color-surface); color: var(--color-text); }
+.tag-outline { border-color: color-mix(in srgb, #fff 30%, transparent); color: var(--color-text); }
+
+input, select, textarea, .inu, .in, .input, .custin, .gsel, .msel {
+  border-radius: var(--radius-md) !important;
+  background: var(--color-surface) !important;
+  border-color: var(--color-divider) !important;
+}
+
+/* Section dividers/hairlines read cleaner as pure low-alpha white */
+[style*="border-top:1px solid var(--color-divider)"],
+[style*="border-bottom:1px solid var(--color-divider)"] { border-color: var(--color-divider) !important; }
+
+@media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
