@@ -48,15 +48,26 @@
   --color-accent-800: #202020;
   --color-accent-900: #0f0f0f;
 
-  --color-accent-2-100: #f2f2f2;
-  --color-accent-2-200: #e6e6e6;
-  --color-accent-2-300: #d0d0d0;
-  --color-accent-2-400: #aaaaaa;
-  --color-accent-2-500: #888888;
-  --color-accent-2-600: #5c5c5c;
-  --color-accent-2-700: #3a3a3a;
-  --color-accent-2-800: #202020;
-  --color-accent-2-900: #0f0f0f;
+  /* — accent-2: the flame — matched to the I AM mark's own icon (bright
+     orange-red tip → vivid red → deep crimson shadow). This is the one
+     deliberate color note against an otherwise monochrome system. — */
+  --color-accent-2: #d6301f;
+  --color-accent-2-100: #fdece7;
+  --color-accent-2-200: #fac9bb;
+  --color-accent-2-300: #f29a80;
+  --color-accent-2-400: #e6613f;
+  --color-accent-2-500: #d6301f;
+  --color-accent-2-600: #ad2015;
+  --color-accent-2-700: #841710;
+  --color-accent-2-800: #57100b;
+  --color-accent-2-900: #2e0805;
+
+  /* Bright stop is #d1401c rather than a lighter orange — verified against
+     white button text: ~4.7:1 at the brightest point, ~4.9:1 at the vivid-red
+     midpoint, well clear at the crimson end. A lighter orange here reads
+     lovely but drops to ~3.3:1 with white text, below the 4.5:1 floor for
+     15px bold labels. */
+  --gradient-flame: linear-gradient(135deg, #d1401c 0%, #d6301f 45%, #7a1220 100%);
 
   /* — type: one family, weight does the work — */
   --font-heading: "DM Sans", system-ui, sans-serif;
@@ -114,6 +125,30 @@ h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
 }
 .abtn:hover { transform: translateY(-2px) scale(1.015); }
 
+/* Filled/primary buttons pick up the flame — every button that declares its
+   own `background` (as opposed to the border-only outline/ghost buttons) is
+   matched purely by that inline declaration, so no markup changes needed. */
+.abtn[style*="background"] {
+  background: var(--gradient-flame) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-accent-2) 35%, transparent);
+}
+.abtn[style*="background"]:hover {
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--color-accent-2) 50%, transparent);
+}
+
+/* Hover underline reads as a small flame stroke instead of plain white */
+.undl { background-image: linear-gradient(var(--color-accent-2), var(--color-accent-2)) !important; }
+
+/* The play button on "Watch the latest message" gets an ember ring */
+#watch a[aria-label="Play latest message"] span {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-2) 45%, transparent),
+              0 0 34px 6px color-mix(in srgb, var(--color-accent-2) 45%, transparent) !important;
+}
+
+:focus-visible { outline-color: var(--color-accent-2) !important; }
+::selection { background: color-mix(in srgb, var(--color-accent-2) 32%, transparent); }
+
 /* Cards, tags, inputs: same bold rounding language throughout */
 .lift, .card, article.lift { border-radius: var(--radius-md) !important; }
 .tag { border-radius: var(--radius-pill) !important; font-weight: 700; }
@@ -130,5 +165,37 @@ input, select, textarea, .inu, .in, .input, .custin, .gsel, .msel {
 /* Section dividers/hairlines read cleaner as pure low-alpha white */
 [style*="border-top:1px solid var(--color-divider)"],
 [style*="border-bottom:1px solid var(--color-divider)"] { border-color: var(--color-divider) !important; }
+
+/* ── Flame in motion: the three scroll-driven ambient glows go warm instead
+   of grayscale. Only the `background` gradient is overridden — position,
+   opacity, transform, and scale stay exactly as index.html's cinematic
+   layer defines them, since that's the load-bearing scroll-scrub math. */
+.weekend__warm {
+  background: radial-gradient(125% 95% at 50% 42%, color-mix(in srgb, var(--color-accent-2) 30%, transparent), transparent 68%);
+}
+.prayer__glow {
+  background: radial-gradient(58% 52% at 32% 42%, color-mix(in srgb, var(--color-accent-2) 55%, transparent), transparent 70%);
+}
+.give__drench {
+  background: linear-gradient(158deg, var(--color-accent-2-300), var(--color-accent-2-500) 55%, var(--color-accent-2-300));
+}
+.give__stage { background: var(--color-accent-2-900); }
+.give__title { color: #fff !important; }
+.give__lede { color: color-mix(in srgb, #fff 78%, transparent) !important; }
+.give__kicker { color: var(--color-accent-2-200) !important; }
+/* The outline "Ways to give" button was authored for a light give-section
+   background; the section is now dark crimson, so it needs light ink too. */
+.give__cta .abtn:not([style*="background"]) {
+  color: #fff !important;
+  border-color: color-mix(in srgb, #fff 45%, transparent) !important;
+}
+
+/* A faint ember note low in the hero vignette — subtle, not a wash */
+.hero__scrim {
+  background: linear-gradient(180deg,
+    rgba(10,10,10,.55) 0%,
+    rgba(10,10,10,.15) 42%,
+    color-mix(in srgb, var(--color-accent-2-900) 55%, rgba(10,10,10,.75)) 100%) !important;
+}
 
 @media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
