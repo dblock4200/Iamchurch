@@ -183,10 +183,8 @@ html { scroll-behavior: smooth; }
   .amt button{font-family:var(--font-heading);font-size:20px;padding:16px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;color:var(--color-text);cursor:pointer;transition:all .25s;font-variant-numeric:tabular-nums}
   .amt button:hover{border-color:var(--color-accent);color:var(--color-accent)}
   .amt button.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
-  .gsel{width:100%;box-sizing:border-box;appearance:none;cursor:pointer;font-family:var(--font-body);font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:13px 40px 13px 14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b68235' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:border-color .25s}
-  .gsel:hover,.gsel:focus{outline:none;border-color:var(--color-accent)}
-  .custin{width:100%;box-sizing:border-box;font-family:var(--font-heading);font-size:26px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:12px 14px 12px 40px;transition:border-color .25s}
-  .custin:focus{outline:none;border-color:var(--color-accent)}
+  /* Form fields come from the shared .field / .field-input component in
+     micro.css — nothing field-related is declared on this page. */
   .faq summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--font-heading);font-weight:400;font-size:20px}
   .faq summary::-webkit-details-marker{display:none}
   .faq .pm{flex:none;width:24px;height:24px;position:relative;transition:transform .3s}
@@ -228,13 +226,13 @@ html { scroll-behavior: smooth; }
       <div class="rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:clamp(24px,3vw,36px);box-shadow:var(--shadow-md);background:var(--color-bg)">
         <h2 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 22px">Give a gift</h2>
 
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Fund</label>
-          <select class="gsel"><option>Tithes &amp; Offerings</option><option>Building &amp; Expansion</option><option>Outreach &amp; Missions</option><option>Benevolence Fund</option></select>
+        <div class="field">
+          <label>Fund</label>
+          <select class="field-input field-input--select is-filled"><option>Tithes &amp; Offerings</option><option>Building &amp; Expansion</option><option>Outreach &amp; Missions</option><option>Benevolence Fund</option></select>
         </div>
 
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Frequency</label>
+        <div class="field">
+          <label>Frequency</label>
           <div class="seg" id="freqSeg">
             <button type="button" class="on" data-freq="one">One-time</button>
             <button type="button" data-freq="week">Weekly</button>
@@ -242,9 +240,9 @@ html { scroll-behavior: smooth; }
           </div>
         </div>
 
-        <div style="margin-bottom:20px">
-          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Amount</label>
-          <div class="amt" id="amtGrid" style="margin-bottom:12px">
+        <div class="field">
+          <label>Amount</label>
+          <div class="amt" id="amtGrid" style="margin-bottom:16px">
             <button type="button" data-amt="25">$25</button>
             <button type="button" data-amt="50">$50</button>
             <button type="button" class="on" data-amt="100">$100</button>
@@ -252,14 +250,14 @@ html { scroll-behavior: smooth; }
             <button type="button" data-amt="500">$500</button>
             <button type="button" data-amt="1000">$1000</button>
           </div>
-          <div style="position:relative">
-            <span style="position:absolute;left:15px;top:50%;transform:translateY(-50%);font-family:var(--font-heading);font-size:22px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">$</span>
-            <input class="custin" id="customAmt" type="text" inputmode="decimal" placeholder="Other amount" />
+          <div class="field__control">
+            <span class="field__icon field__icon--lead" style="font-family:var(--font-heading);font-size:22px">$</span>
+            <input class="field-input field-input--amount field-input--lead" id="customAmt" type="text" inputmode="decimal" placeholder="Other amount" />
           </div>
         </div>
 
-        <div style="margin-bottom:24px">
-          <label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:8px">Method</label>
+        <div class="field">
+          <label>Method</label>
           <div class="seg" id="methodSeg">
             <button type="button" class="on" data-method="card">Card / Bank</button>
             <button type="button" data-method="crypto">Crypto</button>

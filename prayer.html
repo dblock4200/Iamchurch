@@ -174,11 +174,8 @@ html { scroll-behavior: smooth; }
 
 </style>
 <style>
-  .ff label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin-bottom:8px}
-  .ff .req{color:var(--color-accent)}
-  .in{width:100%;box-sizing:border-box;font-family:var(--font-body);font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:12px 14px;transition:border-color .25s,box-shadow .25s}
-  .in:hover{border-color:color-mix(in srgb,var(--color-text) 34%,transparent)}
-  .in:focus{outline:none;border-color:var(--color-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--color-accent) 18%,transparent)}
+  /* Form fields come from the shared .field / .field-input component in
+     micro.css — nothing field-related is declared on this page. */
   .helpopt{text-align:left;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:22px 24px;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .3s;display:flex;gap:16px;align-items:center}
   .helpopt:hover{border-color:var(--color-accent);transform:translateY(-3px);box-shadow:var(--shadow-md)}
   .helpopt.on{border-color:var(--color-accent);box-shadow:0 0 0 2px var(--color-accent) inset}
@@ -194,7 +191,7 @@ html { scroll-behavior: smooth; }
   .faq details[open] .pm::after{opacity:0}
   .faq details[open] .pm{transform:rotate(180deg)}
   .faq p{margin:0 0 22px;font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:70ch}
-  @media (max-width:760px){.help-grid{grid-template-columns:1fr!important}.contact-grid{grid-template-columns:1fr!important}}
+  @media (max-width:760px){.help-grid{grid-template-columns:1fr!important}}
 </style>
 <link rel="stylesheet" href="theme-v3.css">
 <link rel="stylesheet" href="micro.css">
@@ -254,19 +251,19 @@ html { scroll-behavior: smooth; }
       <h3 id="formTitle" style="font-family:var(--font-heading);font-weight:600;font-size:24px;margin:0 0 6px">Prayer request</h3>
       <p id="formNote" style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin:0 0 22px">Our prayer team will carry this with you this week.</p>
 
-      <div class="ff" style="margin-bottom:34px"><label id="promptLabel">How can we pray for you today? <span class="req">*</span></label>
-        <textarea id="promptField" class="in" rows="5" placeholder="Share whatever's on your heart — as much or as little as you'd like."></textarea>
-        <label style="display:flex;gap:10px;align-items:center;margin-top:14px;text-transform:none;letter-spacing:0;font-size:14px;color:var(--color-text);cursor:pointer">
-          <input type="checkbox" style="width:16px;height:16px;accent-color:var(--color-accent)" /> Keep my request anonymous
+      <div class="field" style="margin-bottom:34px"><label id="promptLabel">How can we pray for you today? <span class="req">*</span></label>
+        <textarea id="promptField" class="field-input field-input--area" rows="5" placeholder="Share whatever's on your heart — as much or as little as you'd like."></textarea>
+        <label class="field-check" style="margin-top:18px">
+          <input type="checkbox" /> Keep my request anonymous
         </label>
       </div>
 
       <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);border-bottom:1px solid var(--color-divider);padding-bottom:12px;margin-bottom:22px">Contact info</div>
-      <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px 22px">
-        <div class="ff"><label>First name <span class="req">*</span></label><input class="in" type="text" placeholder="First" /></div>
-        <div class="ff"><label>Last name <span class="req">*</span></label><input class="in" type="text" placeholder="Last" /></div>
-        <div class="ff"><label>Email address <span class="req">*</span></label><input class="in" type="email" placeholder="you@email.com" /></div>
-        <div class="ff"><label>Phone number</label><input class="in" type="tel" placeholder="(512) 555-0000" /></div>
+      <div class="field-grid">
+        <div class="field"><label>First name <span class="req">*</span></label><input class="field-input" type="text" placeholder="First" /></div>
+        <div class="field"><label>Last name <span class="req">*</span></label><input class="field-input" type="text" placeholder="Last" /></div>
+        <div class="field"><label>Email address <span class="req">*</span></label><input class="field-input" type="email" placeholder="you@email.com" /></div>
+        <div class="field"><label>Phone number</label><input class="field-input" type="tel" placeholder="(512) 555-0000" /></div>
       </div>
 
       <div style="display:flex;align-items:center;gap:18px;margin-top:34px;flex-wrap:wrap">

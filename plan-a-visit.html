@@ -174,13 +174,8 @@ html { scroll-behavior: smooth; }
 
 </style>
 <style>
-  .ff label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-bottom:2px}
-  .ff .req{color:var(--color-accent)}
-  .inu{width:100%;box-sizing:border-box;font-family:var(--font-body);font-size:16px;color:var(--color-text);background:transparent;border:none;border-bottom:1px solid color-mix(in srgb,var(--color-text) 28%,transparent);padding:9px 2px;transition:border-color .25s}
-  .inu::placeholder{color:color-mix(in srgb,var(--color-text) 34%,transparent)}
-  .inu:hover{border-bottom-color:color-mix(in srgb,var(--color-text) 46%,transparent)}
-  .inu:focus{outline:none;border-bottom:2px solid var(--color-accent);padding-bottom:8px}
-  select.inu{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b68235' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;padding-right:28px}
+  /* Form fields come from the shared .field / .field-input component in
+     micro.css — nothing field-related is declared on this page. */
   .stepper{display:flex;align-items:center;gap:0;border:1px solid var(--color-divider);border-radius:4px;width:fit-content;overflow:hidden}
   .stepper button{font-family:var(--font-heading);font-size:20px;width:44px;height:44px;background:var(--color-bg);border:none;color:var(--color-accent);cursor:pointer;transition:background-color .2s}
   .stepper button:hover{background:var(--color-accent-100)}
@@ -192,7 +187,7 @@ html { scroll-behavior: smooth; }
   .sdot.active .lbl{color:var(--color-text)}
   .sdot.done .num{background:var(--color-accent-200);color:var(--color-accent-800)}
   .sline{flex:1;height:1px;background:var(--color-divider);max-width:90px;margin:0 6px;align-self:flex-start;margin-top:26px}
-  @media (max-width:640px){.name-grid{grid-template-columns:1fr!important}.kids-reassure{grid-template-columns:1fr!important}.sdot .lbl{display:none}}
+  @media (max-width:640px){.kids-reassure{grid-template-columns:1fr!important}.sdot .lbl{display:none}}
 </style>
 <link rel="stylesheet" href="theme-v3.css">
 <link rel="stylesheet" href="micro.css">
@@ -249,20 +244,20 @@ html { scroll-behavior: smooth; }
           <h3 style="font-family:var(--font-heading);font-weight:600;font-size:28px;margin:0">Your name</h3>
           <span style="font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="color:var(--color-accent)">*</span> required</span>
         </div>
-        <div class="name-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:26px 36px">
-          <div class="ff"><label>First <span class="req">*</span></label><input class="inu" type="text" placeholder="First" /></div>
-          <div class="ff"><label>Last <span class="req">*</span></label><input class="inu" type="text" placeholder="Last" /></div>
-          <div class="ff" style="grid-column:1/-1"><label>Email <span class="req">*</span></label><input class="inu" type="email" placeholder="you@email.com" /></div>
-          <div class="ff" style="grid-column:1/-1"><label>Street address</label><input class="inu" type="text" placeholder="6532 N El Mirage Rd" /></div>
-          <div class="ff"><label>City</label><input class="inu" type="text" placeholder="Glendale" /></div>
-          <div class="ff"><label>State</label>
-            <select class="inu"><option value="" disabled selected>Select</option><option>AZ</option><option>CA</option><option>NV</option><option>NM</option><option>UT</option></select>
+        <div class="field-grid">
+          <div class="field"><label>First <span class="req">*</span></label><input class="field-input" type="text" placeholder="First" /></div>
+          <div class="field"><label>Last <span class="req">*</span></label><input class="field-input" type="text" placeholder="Last" /></div>
+          <div class="field field--wide"><label>Email <span class="req">*</span></label><input class="field-input" type="email" placeholder="you@email.com" /></div>
+          <div class="field field--wide"><label>Street address</label><input class="field-input" type="text" placeholder="6532 N El Mirage Rd" /></div>
+          <div class="field"><label>City</label><input class="field-input" type="text" placeholder="Glendale" /></div>
+          <div class="field"><label>State</label>
+            <select class="field-input field-input--select"><option value="" disabled selected>Select</option><option>AZ</option><option>CA</option><option>NV</option><option>NM</option><option>UT</option></select>
           </div>
-          <div class="ff"><label>Zip</label><input class="inu" type="text" inputmode="numeric" placeholder="85307" /></div>
-          <div class="ff"><label>Mobile <span class="req">*</span></label><input class="inu" type="tel" placeholder="(623) 555-0000" /></div>
-          <div class="ff"><label>What date are you coming? <span class="req">*</span></label><input class="inu" type="date" /></div>
-          <div class="ff" style="grid-column:1/-1"><label>Service time <span class="req">*</span></label>
-            <select class="inu"><option>Sunday, 2:00 PM</option></select>
+          <div class="field"><label>Zip</label><input class="field-input" type="text" inputmode="numeric" placeholder="85307" /></div>
+          <div class="field"><label>Mobile <span class="req">*</span></label><input class="field-input" type="tel" placeholder="(623) 555-0000" /></div>
+          <div class="field"><label>What date are you coming? <span class="req">*</span></label><input class="field-input is-filled" type="date" /></div>
+          <div class="field field--wide"><label>Service time <span class="req">*</span></label>
+            <select class="field-input field-input--select is-filled"><option>Sunday, 2:00 PM</option></select>
           </div>
         </div>
         <p style="font-size:12px;line-height:1.55;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin:22px 0 0;max-width:70ch">By providing your phone number you are consenting to receive text messages from I AM related to your visit. If you wish not to receive them, reply STOP at any time.</p>
@@ -275,10 +270,10 @@ html { scroll-behavior: smooth; }
           <span style="font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Optional — skip if none</span>
         </div>
         <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:64ch;margin:0 0 26px">Bringing little ones? Let us know how many so our I AM Kids team can have secure check-in tags ready when you arrive.</p>
-        <div class="ff" style="margin-bottom:26px"><label style="margin-bottom:10px">How many children?</label>
+        <div class="field"><label>How many children?</label>
           <div class="stepper"><button type="button" data-dir="-1">−</button><span id="childCount">0</span><button type="button" data-dir="1">+</button></div>
         </div>
-        <div id="childRows" style="display:grid;grid-template-columns:1fr 1fr;gap:26px 36px"></div>
+        <div id="childRows" class="field-grid"></div>
       </div>
 
       <!-- STEP 3 · SUBMIT -->
@@ -286,12 +281,12 @@ html { scroll-behavior: smooth; }
         <div style="border-bottom:1px solid var(--color-divider);padding-bottom:12px;margin-bottom:26px">
           <h3 style="font-family:var(--font-heading);font-weight:600;font-size:28px;margin:0">Your spouse <span style="font-weight:400;font-size:19px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">(optional)</span></h3>
         </div>
-        <div class="name-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:26px 36px">
-          <div class="ff"><label>First</label><input class="inu" type="text" placeholder="First" /></div>
-          <div class="ff"><label>Last</label><input class="inu" type="text" placeholder="Last" /></div>
-          <div class="ff"><label>Email</label><input class="inu" type="email" placeholder="you@email.com" /></div>
-          <div class="ff"><label>Mobile</label><input class="inu" type="tel" placeholder="(512) 555-0000" /></div>
-          <div class="ff" style="grid-column:1/-1"><label>Anything we should know? <span style="text-transform:none;letter-spacing:0;color:color-mix(in srgb,var(--color-text) 45%,transparent)">(optional)</span></label><input class="inu" type="text" placeholder="Accessibility needs, questions, or just say hi" /></div>
+        <div class="field-grid">
+          <div class="field"><label>First</label><input class="field-input" type="text" placeholder="First" /></div>
+          <div class="field"><label>Last</label><input class="field-input" type="text" placeholder="Last" /></div>
+          <div class="field"><label>Email</label><input class="field-input" type="email" placeholder="you@email.com" /></div>
+          <div class="field"><label>Mobile</label><input class="field-input" type="tel" placeholder="(512) 555-0000" /></div>
+          <div class="field field--wide"><label>Anything we should know? <span class="subtle">(optional)</span></label><input class="field-input" type="text" placeholder="Accessibility needs, questions, or just say hi" /></div>
         </div>
         <div style="background:var(--color-accent-100);border-radius:var(--radius-md);padding:22px 24px;margin-top:30px;display:flex;gap:14px;align-items:flex-start">
           <span style="flex:none;color:var(--color-accent-700);margin-top:1px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
@@ -374,8 +369,8 @@ html { scroll-behavior: smooth; }
       childCount.textContent=children;
       var rows='';
       for(var i=1;i<=Math.min(children,6);i++){
-        rows+='<div class="ff"><label>Child '+i+' — first name</label><input class="inu" type="text" placeholder="First name" /></div>'+
-              '<div class="ff"><label>Age / grade</label><input class="inu" type="text" placeholder="e.g. 4, or 2nd grade" /></div>';
+        rows+='<div class="field"><label>Child '+i+' — first name</label><input class="field-input" type="text" placeholder="First name" /></div>'+
+              '<div class="field"><label>Age / grade</label><input class="field-input" type="text" placeholder="e.g. 4, or 2nd grade" /></div>';
       }
       childRows.innerHTML=rows;
       childRows.style.display=children>0?'grid':'none';

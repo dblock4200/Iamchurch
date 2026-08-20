@@ -180,8 +180,8 @@ html { scroll-behavior: smooth; }
   .chip{font-family:var(--font-heading);font-size:14px;padding:8px 18px;border:1px solid var(--color-divider);border-radius:999px;background:transparent;color:var(--color-text);cursor:pointer;transition:all .25s;white-space:nowrap}
   .chip:hover{border-color:var(--color-accent);color:var(--color-accent)}
   .chip.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
-  .msel{appearance:none;cursor:pointer;font-family:var(--font-heading);font-size:15px;color:var(--color-text);background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;padding:11px 40px 11px 15px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b68235' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:border-color .25s}
-  .msel:hover,.msel:focus{outline:none;border-color:var(--color-accent)}
+  /* Form fields come from the shared .field / .field-input component in
+     micro.css — nothing field-related is declared on this page. */
   @media (max-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr)!important}}
   @media (max-width:560px){.ev-grid{grid-template-columns:1fr!important}}
 </style>
@@ -221,8 +221,8 @@ html { scroll-behavior: smooth; }
   <section style="border-bottom:1px solid var(--color-divider);position:sticky;top:73px;z-index:15;background:color-mix(in srgb,var(--color-bg) 94%,transparent);backdrop-filter:blur(8px)">
     <div style="max-width:1120px;margin:0 auto;padding:20px clamp(20px,5vw,44px);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Ministry</label>
-        <select class="msel" id="minsel">
+        <label class="field__label" style="margin:0">Ministry</label>
+        <select class="field-input field-input--select field-input--display field-input--inline is-filled" id="minsel">
           <option>All Ministries</option><option>Compassion</option><option>Worship</option><option>Next Steps</option><option>Kids</option><option>Small Groups</option><option>Men</option><option>Women</option><option>Young Adults</option><option>Missions</option><option>Prayer</option>
         </select>
       </div>
@@ -356,8 +356,8 @@ html { scroll-behavior: smooth; }
     <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(20px,5vw,44px);text-align:center">
       <h2 class="rv" style="font-family:var(--font-heading);font-weight:400;font-size:clamp(30px,3.8vw,46px);line-height:1.06;max-width:22ch;margin:0 auto 14px;color:var(--color-accent-900)">Never miss what's next.</h2>
       <p class="rv rv-d1" style="font-size:16px;line-height:1.6;color:var(--color-accent-800);max-width:48ch;margin:0 auto 24px">Get the month ahead in your inbox — one short email, the first of each month.</p>
-      <form class="rv rv-d2" onsubmit="return false" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:460px;margin:0 auto">
-        <input type="email" placeholder="you@email.com" style="flex:1;min-width:220px;box-sizing:border-box;font-family:var(--font-body);font-size:15px;background:var(--color-bg);border:1px solid var(--color-accent);border-radius:4px;padding:13px 15px" />
+      <form class="rv rv-d2" onsubmit="return false" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto">
+        <input class="field-input field-input--inline" type="email" placeholder="you@email.com" style="flex:1" />
         <button type="submit" class="abtn" style="background:var(--color-accent-700);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:15px;padding:13px 26px;border-radius:4px;border:none;cursor:pointer">Subscribe</button>
       </form>
     </div>
