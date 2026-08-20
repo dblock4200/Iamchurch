@@ -1,0 +1,142 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   I AM — PHASE 2 THEME  ("Clay" system)
+   A third, independent visual identity — same content, structure, and page
+   hierarchy as Phase 1 (theme-v1.css / the Elevation-inspired system).
+   Only the design layer changes: warm paper + terracotta in place of
+   Phase 1's near-black monochrome, a slab-serif/humanist-sans pairing in
+   place of Phase 1's single grotesque, sharp near-square controls in place
+   of Phase 1's pills, and a looser, more generous spacing rhythm.
+
+   Load order: same slot as theme-v1.css (after each page's inline <style>
+   block, before micro.css) — swap the <link> to flip identities.
+
+   Deliberately does NOT touch .scene / .scene__stage / --p / --hp cinematic
+   scroll mechanics — those pinned-scene heights are load-bearing math, not
+   a design token, and stay identical across every version of this site.
+   ══════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Karla:wght@400;500;700&display=swap');
+
+:root {
+  color-scheme: light;
+
+  /* — surface & text: warm paper, clay ink — */
+  --color-bg: #f6f1e7;
+  --color-surface: #ece3d0;
+  --color-text: #241f18;
+  --color-accent: #c1512f;
+  --color-accent-2: #8a6a3a;
+  --color-divider: color-mix(in srgb, #241f18 15%, transparent);
+
+  /* — neutral ramp, warm-tinted — */
+  --color-neutral-100: #faf7f0;
+  --color-neutral-200: #efe9dc;
+  --color-neutral-300: #ddd3bf;
+  --color-neutral-400: #c0b39a;
+  --color-neutral-500: #a1927a;
+  --color-neutral-600: #7d715c;
+  --color-neutral-700: #5c5344;
+  --color-neutral-800: #3a3428;
+  --color-neutral-900: #221e17;
+
+  /* — accent ramp: clay/terracotta — */
+  --color-accent-100: #fbe9e0;
+  --color-accent-200: #f5cfba;
+  --color-accent-300: #e8ab8b;
+  --color-accent-400: #d68360;
+  --color-accent-500: #c1512f;
+  --color-accent-600: #a03f22;
+  --color-accent-700: #7c3019;
+  --color-accent-800: #572112;
+  --color-accent-900: #38150b;
+
+  /* — accent-2 ramp: bronze/ochre — */
+  --color-accent-2-100: #f5eede;
+  --color-accent-2-200: #e7d7ae;
+  --color-accent-2-300: #d3ba7d;
+  --color-accent-2-400: #b3944f;
+  --color-accent-2-500: #8a6a3a;
+  --color-accent-2-600: #6d5229;
+  --color-accent-2-700: #503b1c;
+  --color-accent-2-800: #362810;
+  --color-accent-2-900: #22190a;
+
+  /* — type: slab serif display against a humanist-sans body — */
+  --font-heading: "Bitter", Georgia, serif;
+  --font-heading-weight: 700;
+  --font-body: "Karla", system-ui, sans-serif;
+
+  /* — spacing: a looser, more generous rhythm than Phase 1 — */
+  --space-1: 6px;
+  --space-2: 12px;
+  --space-3: 18px;
+  --space-4: 26px;
+  --space-6: 38px;
+  --space-8: 52px;
+
+  /* — radius: sharp, near-square — the opposite silhouette from Phase 1's
+     pills — */
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-pill: 3px;
+
+  /* — elevation: warm, low, printed-poster shadows — */
+  --shadow-sm: 0 1px 0 color-mix(in srgb, #241f18 18%, transparent);
+  --shadow-md: 4px 4px 0 color-mix(in srgb, #241f18 14%, transparent);
+  --shadow-lg: 8px 8px 0 color-mix(in srgb, #241f18 16%, transparent);
+}
+
+html { background: var(--color-bg); }
+body { font-size: 16.5px; line-height: 1.65; letter-spacing: 0; }
+h1, h2, h3, h4, h5, h6 { letter-spacing: -0.008em; }
+p { line-height: 1.75; }
+
+::selection { background: color-mix(in srgb, var(--color-accent) 26%, transparent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #241f18 22%, transparent) !important; }
+
+/* Imagery: warm duotone in place of both the sepia "plate" and Phase 1's
+   cool unframed dark gradient */
+.plate {
+  filter: sepia(0.3) saturate(1.05) contrast(1.02) !important;
+  border-color: var(--color-accent-100) !important;
+  outline-color: var(--color-divider) !important;
+  border-radius: var(--radius-sm);
+}
+.img-slot {
+  background: linear-gradient(135deg, var(--color-accent-300), var(--color-accent-700)) !important;
+  color: color-mix(in srgb, #fff 90%, transparent) !important;
+}
+
+/* Buttons: sharp, near-square, terracotta-forward — replaces Phase 1's pill
+   silhouette entirely */
+.abtn, a.abtn, button.abtn {
+  border-radius: var(--radius-md) !important;
+  padding: 15px 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.005em;
+}
+.abtn:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-md); }
+
+/* Cards, tags, inputs follow the same sharp language */
+.lift, .card, article.lift { border-radius: var(--radius-sm) !important; }
+.lift:hover { box-shadow: var(--shadow-lg); }
+.tag { border-radius: var(--radius-sm) !important; font-weight: 700; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border-color: var(--color-accent); color: var(--color-accent-700); }
+
+input, select, textarea, .inu, .in, .input, .custin, .gsel, .msel {
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-neutral-100) !important;
+  border-color: var(--color-divider) !important;
+}
+
+/* A looser rhythm via gap + type metrics rather than touching literal
+   inline section padding — the hero and the three pinned .scene moments
+   keep their exact heights untouched, since that math drives the
+   scroll-scrubbed choreography and must stay identical across every
+   version of this site. */
+.grid-3, .grid-tiles { gap: 22px !important; }
+.event-row { padding-block: 26px !important; }
+
+@media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
