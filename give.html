@@ -8,51 +8,71 @@
 <meta name="description" content="See what God can do through your generosity. Give to I AM Church — tithes, offerings, outreach, and more.">
 <style>
 /* I AM Church — design-system tokens and component classes.
-   Ported from the "Classical" Claude Design system (styles.css). */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap');
+   The Gather design is defined inline here, on every page, so the site has no
+   external stylesheet it must load in order to look like itself. */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap');
 
 :root {
   color-scheme: light;
-  --color-bg: #f3f2f2;
-  --color-surface: #eae9e9;
-  --color-text: #201f1d;
-  --color-accent: #b68235;
-  --color-accent-2: #ac803e;
-  --color-divider: color-mix(in srgb, #201f1d 16%, transparent);
 
-  --color-neutral-100: #f8f4f4;
-  --color-neutral-200: #eae7e7;
-  --color-neutral-300: #d7d3d3;
-  --color-neutral-400: #bab6b6;
-  --color-neutral-500: #9b9797;
-  --color-neutral-600: #7d7979;
-  --color-neutral-700: #605d5d;
-  --color-neutral-800: #444141;
-  --color-neutral-900: #2d2b2b;
+  /* ── Gather design tokens (inlined; formerly theme-v3.css) ──────────────
+     Ported from gatherasheville.org's visual language: cream/parchment paper,
+     a deep teal accent, bold uppercase Montserrat over a humanist body, and
+     sharp zero-radius controls. These live here rather than in a linked file
+     so a failed stylesheet can never fall the site back to a different
+     design. --- */
 
-  --color-accent-100: #fff3e4;
-  --color-accent-200: #ffe3bf;
-  --color-accent-300: #facb8d;
-  --color-accent-400: #e1ad66;
-  --color-accent-500: #c28d41;
-  --color-accent-600: #a06f24;
-  --color-accent-700: #7d5411;
-  --color-accent-800: #5a3b0a;
-  --color-accent-900: #3a270d;
+  /* — surface & text — */
+  --color-bg: #ebe7dc;
+  --color-surface: #ded8c6;
+  --color-text: #0f172a;
+  --color-accent: #153f3f;
+  --color-divider: color-mix(in srgb, #0f172a 16%, transparent);
 
-  --color-accent-2-100: #fff3e4;
-  --color-accent-2-200: #ffe3be;
-  --color-accent-2-300: #f5cd96;
-  --color-accent-2-400: #dbaf70;
-  --color-accent-2-500: #bc8f4e;
-  --color-accent-2-600: #9b7232;
-  --color-accent-2-700: #79561f;
-  --color-accent-2-800: #573d14;
-  --color-accent-2-900: #382810;
+  /* — neutral ramp — */
+  --color-neutral-100: #f7f5ee;
+  --color-neutral-200: #ebe7dc;
+  --color-neutral-300: #d3cdb9;
+  --color-neutral-400: #b0a98e;
+  --color-neutral-500: #8c8468;
+  --color-neutral-600: #6b6450;
+  --color-neutral-700: #4a4638;
+  --color-neutral-800: #2b2921;
+  --color-neutral-900: #16150f;
 
-  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
-  --font-heading-weight: 600;
-  --font-body: "Lora", system-ui, sans-serif;
+  /* — accent ramp: deep teal — */
+  --color-accent-100: #e4efed;
+  --color-accent-200: #bcd8d4;
+  --color-accent-300: #8fbdb6;
+  --color-accent-400: #5c9990;
+  --color-accent-500: #337971;
+  --color-accent-600: #1f5c55;
+  --color-accent-700: #153f3f;
+  --color-accent-800: #0d2b2b;
+  --color-accent-900: #061717;
+
+  /* — accent-2: the flame — matched to the I AM mark's own icon, paired
+     against the cool teal/cream base for warm-vs-cool contrast, the same
+     relationship the logo itself has. — */
+  --color-accent-2: #d6301f;
+  --color-accent-2-100: #fdece7;
+  --color-accent-2-200: #fac9bb;
+  --color-accent-2-300: #f29a80;
+  --color-accent-2-400: #e6613f;
+  --color-accent-2-500: #d6301f;
+  --color-accent-2-600: #ad2015;
+  --color-accent-2-700: #841710;
+  --color-accent-2-800: #57100b;
+  --color-accent-2-900: #2e0805;
+
+  /* Bright stop is #d1401c rather than a lighter orange — verified against
+     white button text at ~4.7:1, clear of the 4.5:1 floor for 15px bold. */
+  --gradient-flame: linear-gradient(135deg, #d1401c 0%, #d6301f 45%, #7a1220 100%);
+
+  /* — type: bold uppercase display over a plain humanist body — */
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-heading-weight: 800;
+  --font-body: "Work Sans", system-ui, sans-serif;
 
   --space-1: 4.6px;
   --space-2: 9.2px;
@@ -61,17 +81,20 @@
   --space-6: 27.6px;
   --space-8: 36.8px;
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 7px;
+  /* — radius: sharp, architectural — zero everywhere — */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
 
-  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
-  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
-  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+  /* — elevation — */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #0f172a 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #0f172a 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #0f172a 22%, transparent);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { background: #f3f2f2; }
+html { background: var(--color-bg); }
 body {
   margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400;
   background: var(--color-bg); color: var(--color-text);
@@ -90,7 +113,7 @@ img { display: block; max-width: 100%; }
 
 /* — plate: the framed, tinted image treatment — */
 .plate {
-  filter: sepia(0.22) saturate(0.82) contrast(1.05);
+  filter: none;
   box-sizing: border-box;
   border: 6px solid var(--color-surface);
   outline: 1px solid var(--color-divider);
@@ -110,11 +133,8 @@ img { display: block; max-width: 100%; }
 .img-slot {
   position: relative; width: 100%; height: 100%; min-height: 100%;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  background:
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--color-accent) 22%, var(--color-surface)),
-      color-mix(in srgb, var(--color-neutral-700) 30%, var(--color-surface)));
-  color: color-mix(in srgb, #fff 82%, transparent);
+  background: linear-gradient(135deg, var(--color-accent-800), var(--color-neutral-900));
+  color: color-mix(in srgb, #fff 80%, transparent);
   overflow: hidden;
 }
 .img-slot::before {
@@ -137,7 +157,7 @@ img { display: block; max-width: 100%; }
    ══════════════════════════════════════════════════════════════════════ */
 html { scroll-behavior: smooth; }
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, #201f1d 18%, transparent); border-radius: 8px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #0f172a 18%, transparent); border-radius: 8px; }
 
 @keyframes upIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes ken { from { transform: scale(1.02); } to { transform: scale(1.13); } }
@@ -197,7 +217,92 @@ html { scroll-behavior: smooth; }
   @media (max-width:900px){.give-hero{grid-template-columns:1fr!important}.ways-grid{grid-template-columns:repeat(2,1fr)!important}.impact-grid{grid-template-columns:1fr!important}.res-grid{grid-template-columns:1fr!important}.ways-feature{grid-row:auto!important}}
   @media (max-width:560px){.ways-grid{grid-template-columns:1fr!important}}
 </style>
-<link rel="stylesheet" href="theme-v3.css">
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   Gather — structural refinements on top of the tokens above.
+   Inlined rather than linked (this replaced theme-v3.css) and placed in the
+   exact cascade slot that <link> occupied, so rendering is unchanged while
+   the design no longer depends on an external file loading.
+   ══════════════════════════════════════════════════════════════════════ */
+h1, h2, h3, h4, h5, h6 { text-transform: uppercase; letter-spacing: -0.01em; }
+h1, h2, h3 { font-weight: var(--font-heading-weight); }
+::selection { background: color-mix(in srgb, var(--color-accent-2) 30%, transparent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #0f172a 22%, transparent) !important; }
+
+/* Photography: crisp, unframed, no sepia. The !important matters — micro.css
+   applies a sepia warm-up filter on .plate hover, and this is what suppresses
+   it; without it, hovering an image reintroduces the old sepia treatment. */
+.plate {
+  filter: none !important;
+  border-color: var(--color-surface) !important;
+  outline-color: var(--color-divider) !important;
+  border-radius: 0 !important;
+}
+.img-slot {
+  background: linear-gradient(135deg, var(--color-accent-800), var(--color-neutral-900)) !important;
+  color: color-mix(in srgb, #fff 80%, transparent) !important;
+}
+
+/* Buttons: sharp squares, uppercase Montserrat labels */
+.abtn, a.abtn, button.abtn {
+  border-radius: 0 !important;
+  padding: 15px 30px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px !important;
+}
+.abtn:hover { transform: translateY(-2px); }
+
+/* Filled/primary buttons pick up the flame — matched purely by their own
+   inline `background` declaration (outline/ghost buttons don't set one),
+   so no markup changes are needed. */
+.abtn[style*="background"] {
+  background: var(--gradient-flame) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-accent-2) 30%, transparent);
+}
+.abtn[style*="background"]:hover {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-accent-2) 45%, transparent);
+}
+
+.undl { background-image: linear-gradient(var(--color-accent-2), var(--color-accent-2)) !important; }
+:focus-visible { outline-color: var(--color-accent-2) !important; }
+
+/* The three scroll-driven ambient glows go warm instead of teal-tinted —
+   only the `background` gradient changes; position/opacity/transform stay
+   exactly as index.html's cinematic layer defines them. */
+.weekend__warm {
+  background: radial-gradient(125% 95% at 50% 42%, color-mix(in srgb, var(--color-accent-2) 30%, transparent), transparent 68%);
+}
+.prayer__glow {
+  background: radial-gradient(58% 52% at 32% 42%, color-mix(in srgb, var(--color-accent-2) 55%, transparent), transparent 70%);
+}
+.give__drench {
+  background: linear-gradient(158deg, var(--color-accent-2-300), var(--color-accent-2-500) 55%, var(--color-accent-2-300));
+}
+.give__stage { background: var(--color-accent-2-900); }
+.give__title { color: #fff !important; }
+.give__lede { color: color-mix(in srgb, #fff 78%, transparent) !important; }
+.give__kicker { color: var(--color-accent-2-200) !important; }
+.give__cta .abtn:not([style*="background"]) {
+  color: #fff !important;
+  border-color: color-mix(in srgb, #fff 45%, transparent) !important;
+}
+
+/* Cards and tags follow the same sharp language */
+.lift, .card, article.lift { border-radius: 0 !important; }
+.tag { border-radius: 0 !important; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* Form fields need nothing here: the shared .field-input component in
+   micro.css derives its surface from --color-neutral-100 and its corner from
+   --radius-md, both set above. */
+
+@media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
+</style>
 <link rel="stylesheet" href="micro.css">
 </head>
 <body>
