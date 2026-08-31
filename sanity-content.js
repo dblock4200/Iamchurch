@@ -33,8 +33,13 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  // "image-ab12cd-1600x900-jpg" -> a cdn.sanity.io URL, cropped to the
-  // editor's chosen focal point so a badly framed phone photo still works.
+  // "image-ab12cd-1600x900-jpg" -> a cdn.sanity.io URL.
+  //
+  // Honours BOTH of the editor's framing controls, which are separate things
+  // in Sanity: `crop` is the rectangle they dragged in the Studio, `hotspot`
+  // is the focal point they marked inside it. Crop becomes a `rect` in source
+  // pixels; the hotspot steers `fit=crop` when we also resize. Skipping crop
+  // would mean an editor drags the handles, saves, and nothing changes.
   function imageUrl(img, w, h) {
     if (!img || !img.asset || !img.asset._ref) return null;
     var parts = img.asset._ref.split('-');           // image, id, WxH, ext
@@ -42,6 +47,21 @@
     var base = 'https://cdn.sanity.io/images/' + PROJECT_ID + '/' + DATASET +
                '/' + parts[1] + '-' + parts[2] + '.' + parts[3];
     var q = ['auto=format', 'q=78'];
+
+    var c = img.crop;
+    if (c && (c.left || c.top || c.right || c.bottom)) {
+      var dims = parts[2].split('x');
+      var srcW = parseInt(dims[0], 10);
+      var srcH = parseInt(dims[1], 10);
+      if (srcW && srcH) {
+        var left = Math.round(c.left * srcW);
+        var top  = Math.round(c.top * srcH);
+        var cw   = Math.round(srcW - left - c.right * srcW);
+        var ch   = Math.round(srcH - top - c.bottom * srcH);
+        if (cw > 0 && ch > 0) q.push('rect=' + left + ',' + top + ',' + cw + ',' + ch);
+      }
+    }
+
     if (w) q.push('w=' + w);
     if (h) q.push('h=' + h);
     if (w && h) {
@@ -59,6 +79,7 @@
   // photo. Keep that exact behaviour so a photoless event still looks right.
   function plate(img, alt, w, h, extra) {
     var url = imageUrl(img, w, h);
+    if (img && img.alt) alt = img.alt;
     var inner = url
       ? '<img src="' + esc(url) + '" alt="' + esc(alt) + '" loading="lazy" ' +
         'style="width:100%;height:100%;object-fit:cover;display:block">'

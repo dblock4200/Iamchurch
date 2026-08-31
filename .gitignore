@@ -5,3 +5,6 @@ studio/dist/
 studio/.sanity/
 .env
 .DS_Store
+studio/
+studio-i-am-church-website/
+Design.pdf
