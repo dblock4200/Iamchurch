@@ -1,1 +1,7 @@
 .DS_Store
+node_modules/
+studio/node_modules/
+studio/dist/
+studio/.sanity/
+.env
+.DS_Store

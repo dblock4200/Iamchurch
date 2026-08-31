@@ -294,6 +294,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 <link rel="stylesheet" href="micro.css">
 </head>
 <body>
+<!-- Announcement bar: hidden unless it is switched on in Sanity. -->
+<div data-sanity="announcement" style="display:none"></div>
 <div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
 
   <!-- HEADER -->
@@ -346,7 +348,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
   <!-- EVENT GRID -->
   <section id="events" style="max-width:1180px;margin:0 auto;padding:clamp(24px,3vw,36px) clamp(20px,5vw,44px) clamp(48px,6vw,72px)">
     <div id="countLabel" style="font-size:13px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin:0 0 18px">Showing 6 events</div>
-    <div class="ev-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+    <div class="ev-grid" data-sanity="events" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
 
       <article class="evcard rv evitem" data-cats="event volunteer" data-ministry="Compassion" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);cursor:pointer">
         <div class="plate" style="aspect-ratio:16/10;border:none;overflow:hidden"><div class="img-slot ks" role="img" aria-label="Serve day"><span>Serve day</span></div></div>
@@ -475,7 +477,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);max-width:30ch;margin:0">A community learning to follow Jesus together, in the heart of the city.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Gather</span><span>Sundays at 2:00 PM</span><span>6532 N El Mirage Rd</span><span>Glendale, AZ 85307</span></div>
-    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="sermons.html" style="color:inherit;text-decoration:none">Messages</a><a class="undl" href="gallery.html" style="color:inherit;text-decoration:none">Photos</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
     <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Connect</span><a class="undl" href="give.html" style="color:inherit;text-decoration:none">Give</a><a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a><a class="undl" href="mailto:hello@iamchurch.org" style="color:inherit;text-decoration:none">hello@iamchurch.org</a></div>
   </div></footer>
 
@@ -484,18 +486,23 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 <script>
   (function(){
     var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-    if(reduce){document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});}
-    else{
-      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
-      document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+    var io=reduce?null:new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
+    // Rebindable so cards rendered later from Sanity still reveal on scroll.
+    function observeReveals(){
+      [].slice.call(document.querySelectorAll('.rv:not(.rv-bound)')).forEach(function(el){
+        el.classList.add('rv-bound');
+        if(reduce){el.classList.add('in');}else{io.observe(el);}
+      });
     }
-    var items=[].slice.call(document.querySelectorAll('.evitem'));
+    observeReveals();
     var chips=[].slice.call(document.querySelectorAll('[data-type]'));
     var sel=document.getElementById('minsel');
     var count=document.getElementById('countLabel');
     var empty=document.getElementById('emptyState');
     var type='all';
     function apply(){
+      // Queried live so Sanity-rendered cards are included.
+      var items=[].slice.call(document.querySelectorAll('.evitem'));
       var min=sel.value; var shown=0;
       items.forEach(function(it){
         var cats=it.getAttribute('data-cats').split(' ');
@@ -507,8 +514,10 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     }
     chips.forEach(function(btn){btn.addEventListener('click',function(){chips.forEach(function(c){c.classList.remove('on');});btn.classList.add('on');type=btn.getAttribute('data-type');apply();});});
     sel.addEventListener('change',apply);
+    document.addEventListener('content:updated',function(){observeReveals();apply();});
   })();
 </script>
 <script src="micro.js" defer></script>
+<script src="sanity-content.js" defer></script>
 </body>
 </html>

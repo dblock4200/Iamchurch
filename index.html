@@ -563,6 +563,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 <link rel="stylesheet" href="micro.css">
 </head>
 <body>
+<!-- Announcement bar: hidden unless it is switched on in Sanity. -->
+<div data-sanity="announcement" style="display:none"></div>
 
 <div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
 
@@ -693,10 +695,10 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     <div class="scene__stage weekend__stage">
       <div class="weekend__warm" aria-hidden="true"></div>
       <div class="weekend__inner">
-        <div class="weekend__kicker cine-lyr">This weekend</div>
-        <h2 class="weekend__statement cine-lyr">One gathering,<br>wide open.</h2>
-        <p class="weekend__lede cine-lyr">Doors open thirty minutes early for coffee. Come as you are — kids' check-in runs the whole service.</p>
-        <div class="weekend__times">
+        <div class="weekend__kicker cine-lyr" data-sanity="weekend-kicker">This weekend</div>
+        <h2 class="weekend__statement cine-lyr" data-sanity="weekend-statement">One gathering,<br>wide open.</h2>
+        <p class="weekend__lede cine-lyr" data-sanity="weekend-lede">Doors open thirty minutes early for coffee. Come as you are — kids' check-in runs the whole service.</p>
+        <div class="weekend__times" data-sanity="service-times">
           <div class="weekend__time cine-lyr" style="--d:0">
             <div class="weekend__time-k">Sunday</div>
             <div class="weekend__time-v">2:00 PM</div>
@@ -906,6 +908,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span>
       <a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a>
       <a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a>
+      <a class="undl" href="sermons.html" style="color:inherit;text-decoration:none">Messages</a>
+      <a class="undl" href="gallery.html" style="color:inherit;text-decoration:none">Photos</a>
       <a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a>
       <a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a>
     </div>
@@ -989,5 +993,6 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
   })();
 </script>
 <script src="micro.js" defer></script>
+<script src="sanity-content.js" defer></script>
 </body>
 </html>

@@ -306,6 +306,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 <link rel="stylesheet" href="micro.css">
 </head>
 <body>
+<!-- Announcement bar: hidden unless it is switched on in Sanity. -->
+<div data-sanity="announcement" style="display:none"></div>
 <div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
 
   <!-- HEADER -->
@@ -491,7 +493,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);max-width:30ch;margin:0">A community learning to follow Jesus together, in the heart of the city.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Gather</span><span>Sundays at 2:00 PM</span><span>6532 N El Mirage Rd</span><span>Glendale, AZ 85307</span></div>
-    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="sermons.html" style="color:inherit;text-decoration:none">Messages</a><a class="undl" href="gallery.html" style="color:inherit;text-decoration:none">Photos</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
     <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Connect</span><a class="undl" href="give.html" style="color:inherit;text-decoration:none">Give</a><a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a><a class="undl" href="mailto:hello@iamchurch.org" style="color:inherit;text-decoration:none">hello@iamchurch.org</a></div>
   </div></footer>
 
@@ -522,5 +524,6 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
   })();
 </script>
 <script src="micro.js" defer></script>
+<script src="sanity-content.js" defer></script>
 </body>
 </html>
