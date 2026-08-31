@@ -20,7 +20,7 @@ cd "~/I AM Church/studio-i-am-church-website"
 npx sanity login             # browser sign-in
 npx sanity schemas deploy    # uploads the schema to the Content Lake
 npx sanity dataset import seed.ndjson production
-npx sanity deploy            # hostname: iamchurch
+npx sanity deploy            # hostname: iamchurchaz
 ```
 
 Then in [sanity.io/manage](https://sanity.io/manage) → project → **API** →
@@ -31,7 +31,7 @@ request and every page silently falls back to its built-in HTML.
 Finally, **Members** → invite the pastor as an **Editor**. The free plan
 covers the owner plus two editors.
 
-His login is then **https://iamchurch.sanity.studio** — see `PASTOR-GUIDE.md`.
+His login is then **https://iamchurchaz.sanity.studio** — see `PASTOR-GUIDE.md`.
 
 ## The seed content
 

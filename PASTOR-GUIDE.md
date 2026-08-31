@@ -6,7 +6,7 @@ tab and nothing is lost.
 
 ## Signing in
 
-Go to **https://iamchurch.sanity.studio** and sign in with your email.
+Go to **https://iamchurchaz.sanity.studio** and sign in with your email.
 
 Bookmark it. That address is the only one you need.
 
