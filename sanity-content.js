@@ -18,7 +18,7 @@
 (function () {
   'use strict';
 
-  var PROJECT_ID  = 'REPLACE_WITH_PROJECT_ID';
+  var PROJECT_ID  = 'xhz48loo';
   var DATASET     = 'production';
   var API_VERSION = 'v2026-08-31';
 

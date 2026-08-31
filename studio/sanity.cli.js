@@ -4,7 +4,7 @@ import {defineCliConfig} from 'sanity/cli'
 // See studio/README.md for the one-time setup.
 export default defineCliConfig({
   api: {
-    projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'REPLACE_WITH_PROJECT_ID',
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'xhz48loo',
     dataset: 'production',
   },
   studioHost: 'iamchurch',

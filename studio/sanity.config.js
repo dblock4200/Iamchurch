@@ -2,7 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemaTypes'
 
-const PROJECT_ID = process.env.SANITY_STUDIO_PROJECT_ID || 'REPLACE_WITH_PROJECT_ID'
+const PROJECT_ID = process.env.SANITY_STUDIO_PROJECT_ID || 'xhz48loo'
 
 export default defineConfig({
   name: 'i-am-church',
