@@ -1,0 +1,34 @@
+# Netlify build settings for the I AM Church site.
+#
+# This is a plain static site: the HTML pages at the repo root ARE the
+# deployable artifact. There is no build step and no bundler. The Sanity
+# Studio lives in studio/, which is gitignored and never reaches this repo,
+# so nothing here should ever be npm-installed or compiled.
+#
+# Pinning publish/command here means they cannot drift from — or be
+# mis-detected by — the Netlify UI settings.
+#
+# NOTE: this file CANNOT set the production branch. That is a site-level
+# setting and has to be changed in the Netlify dashboard under
+# Site configuration -> Build & deploy -> Branches and deploy contexts.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# The site fetches published content from Sanity at runtime. Long-cache the
+# static assets, but keep HTML revalidating so copy edits go live promptly.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
