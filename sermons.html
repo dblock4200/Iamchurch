@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Sunday Messages — I AM Church</title>
+<meta name="description" content="Watch and revisit Sunday messages from I AM Church in Glendale, AZ.">
+<style>
+/* I AM Church — design-system tokens and component classes.
+   The Gather design is defined inline here, on every page, so the site has no
+   external stylesheet it must load in order to look like itself. */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: light;
+
+  /* ── Gather design tokens (inlined; formerly theme-v3.css) ──────────────
+     Ported from gatherasheville.org's visual language: cream/parchment paper,
+     a deep teal accent, bold uppercase Montserrat over a humanist body, and
+     sharp zero-radius controls. These live here rather than in a linked file
+     so a failed stylesheet can never fall the site back to a different
+     design. --- */
+
+  /* — surface & text — */
+  --color-bg: #ebe7dc;
+  --color-surface: #ded8c6;
+  --color-text: #0f172a;
+  --color-accent: #153f3f;
+  --color-divider: color-mix(in srgb, #0f172a 16%, transparent);
+
+  /* — neutral ramp — */
+  --color-neutral-100: #f7f5ee;
+  --color-neutral-200: #ebe7dc;
+  --color-neutral-300: #d3cdb9;
+  --color-neutral-400: #b0a98e;
+  --color-neutral-500: #8c8468;
+  --color-neutral-600: #6b6450;
+  --color-neutral-700: #4a4638;
+  --color-neutral-800: #2b2921;
+  --color-neutral-900: #16150f;
+
+  /* — accent ramp: deep teal — */
+  --color-accent-100: #e4efed;
+  --color-accent-200: #bcd8d4;
+  --color-accent-300: #8fbdb6;
+  --color-accent-400: #5c9990;
+  --color-accent-500: #337971;
+  --color-accent-600: #1f5c55;
+  --color-accent-700: #153f3f;
+  --color-accent-800: #0d2b2b;
+  --color-accent-900: #061717;
+
+  /* — accent-2: the flame — matched to the I AM mark's own icon, paired
+     against the cool teal/cream base for warm-vs-cool contrast, the same
+     relationship the logo itself has. — */
+  --color-accent-2: #d6301f;
+  --color-accent-2-100: #fdece7;
+  --color-accent-2-200: #fac9bb;
+  --color-accent-2-300: #f29a80;
+  --color-accent-2-400: #e6613f;
+  --color-accent-2-500: #d6301f;
+  --color-accent-2-600: #ad2015;
+  --color-accent-2-700: #841710;
+  --color-accent-2-800: #57100b;
+  --color-accent-2-900: #2e0805;
+
+  /* Bright stop is #d1401c rather than a lighter orange — verified against
+     white button text at ~4.7:1, clear of the 4.5:1 floor for 15px bold. */
+  --gradient-flame: linear-gradient(135deg, #d1401c 0%, #d6301f 45%, #7a1220 100%);
+
+  /* — type: bold uppercase display over a plain humanist body — */
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-heading-weight: 800;
+  --font-body: "Work Sans", system-ui, sans-serif;
+
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  /* — radius: sharp, architectural — zero everywhere — */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 0px;
+
+  /* — elevation — */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #0f172a 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #0f172a 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #0f172a 22%, transparent);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--color-bg); }
+body {
+  margin: 0; font-size: 15px; line-height: 1.55; font-weight: 400;
+  background: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-body);
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
+}
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* — plate: the framed, tinted image treatment — */
+.plate {
+  filter: none;
+  box-sizing: border-box;
+  border: 6px solid var(--color-surface);
+  outline: 1px solid var(--color-divider);
+}
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px;
+  letter-spacing: 0.02em; padding: 3px 10px;
+  border-radius: calc(var(--radius-md) * 0.75);
+}
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* — image placeholder (implements <image-slot> for design review) — */
+.img-slot {
+  position: relative; width: 100%; height: 100%; min-height: 100%;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: linear-gradient(135deg, var(--color-accent-800), var(--color-neutral-900));
+  color: color-mix(in srgb, #fff 80%, transparent);
+  overflow: hidden;
+}
+.img-slot::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,.05) 0 2px, transparent 2px 9px);
+  pointer-events: none;
+}
+.img-slot > span {
+  position: relative; z-index: 1;
+  font-family: var(--font-body); font-size: 12px; letter-spacing: .04em;
+  padding: 8px 14px; max-width: 80%;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Shared interactions — consumed by every page. Page <style> blocks only
+   carry CSS unique to that page (forms, chips, steppers, accordions, …).
+   ══════════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #0f172a 18%, transparent); border-radius: 8px; }
+
+@keyframes upIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes ken { from { transform: scale(1.02); } to { transform: scale(1.13); } }
+.ks { animation: ken 22s ease-in-out infinite alternate; }
+
+.lift { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s, border-color .4s; }
+.lift:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--color-accent); }
+.undl { background-image: linear-gradient(var(--color-accent), var(--color-accent)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px; transition: background-size .4s; }
+.undl:hover { background-size: 100% 1.5px; }
+.abtn { transition: transform .3s cubic-bezier(.2,.7,.2,1), background-color .3s, color .3s, border-color .3s, box-shadow .3s; }
+.abtn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.arrow { display: inline-block; transition: transform .3s; }
+.lift:hover .arrow, .abtn:hover .arrow { transform: translateX(5px); }
+
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+.rv-d1 { transition-delay: .08s; } .rv-d2 { transition-delay: .16s; } .rv-d3 { transition-delay: .24s; }
+
+/* ── Responsive helpers ─────────────────────────────────────────────────
+   !important overrides the inline grid-template-columns the layouts use. */
+@media (max-width: 900px) {
+  .resp { grid-template-columns: 1fr !important; }
+  .resp-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .topnav { gap: 16px !important; flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .resp-2 { grid-template-columns: 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  .rv { opacity: 1; transform: none; transition: none; }
+}
+
+</style>
+<style>
+  .evcard{transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s,border-color .4s}
+  .evcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--color-accent)}
+  .evcard:hover .evtitle{color:var(--color-accent)}
+  .chip{font-family:var(--font-heading);font-size:14px;padding:8px 18px;border:1px solid var(--color-divider);border-radius:999px;background:transparent;color:var(--color-text);cursor:pointer;transition:all .25s;white-space:nowrap}
+  .chip:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .chip.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
+  /* Form fields come from the shared .field / .field-input component in
+     micro.css — nothing field-related is declared on this page. */
+  @media (max-width:900px){.ev-grid{grid-template-columns:repeat(2,1fr)!important}}
+  @media (max-width:560px){.ev-grid{grid-template-columns:1fr!important}}
+</style>
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   Gather — structural refinements on top of the tokens above.
+   Inlined rather than linked (this replaced theme-v3.css) and placed in the
+   exact cascade slot that <link> occupied, so rendering is unchanged while
+   the design no longer depends on an external file loading.
+   ══════════════════════════════════════════════════════════════════════ */
+h1, h2, h3, h4, h5, h6 { text-transform: uppercase; letter-spacing: -0.01em; }
+h1, h2, h3 { font-weight: var(--font-heading-weight); }
+::selection { background: color-mix(in srgb, var(--color-accent-2) 30%, transparent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, #0f172a 22%, transparent) !important; }
+
+/* Photography: crisp, unframed, no sepia. The !important matters — micro.css
+   applies a sepia warm-up filter on .plate hover, and this is what suppresses
+   it; without it, hovering an image reintroduces the old sepia treatment. */
+.plate {
+  filter: none !important;
+  border-color: var(--color-surface) !important;
+  outline-color: var(--color-divider) !important;
+  border-radius: 0 !important;
+}
+.img-slot {
+  background: linear-gradient(135deg, var(--color-accent-800), var(--color-neutral-900)) !important;
+  color: color-mix(in srgb, #fff 80%, transparent) !important;
+}
+
+/* Buttons: sharp squares, uppercase Montserrat labels */
+.abtn, a.abtn, button.abtn {
+  border-radius: 0 !important;
+  padding: 15px 30px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px !important;
+}
+.abtn:hover { transform: translateY(-2px); }
+
+/* Filled/primary buttons pick up the flame — matched purely by their own
+   inline `background` declaration (outline/ghost buttons don't set one),
+   so no markup changes are needed. */
+.abtn[style*="background"] {
+  background: var(--gradient-flame) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-accent-2) 30%, transparent);
+}
+.abtn[style*="background"]:hover {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-accent-2) 45%, transparent);
+}
+
+.undl { background-image: linear-gradient(var(--color-accent-2), var(--color-accent-2)) !important; }
+:focus-visible { outline-color: var(--color-accent-2) !important; }
+
+/* The three scroll-driven ambient glows go warm instead of teal-tinted —
+   only the `background` gradient changes; position/opacity/transform stay
+   exactly as index.html's cinematic layer defines them. */
+.weekend__warm {
+  background: radial-gradient(125% 95% at 50% 42%, color-mix(in srgb, var(--color-accent-2) 30%, transparent), transparent 68%);
+}
+.prayer__glow {
+  background: radial-gradient(58% 52% at 32% 42%, color-mix(in srgb, var(--color-accent-2) 55%, transparent), transparent 70%);
+}
+.give__drench {
+  background: linear-gradient(158deg, var(--color-accent-2-300), var(--color-accent-2-500) 55%, var(--color-accent-2-300));
+}
+.give__stage { background: var(--color-accent-2-900); }
+.give__title { color: #fff !important; }
+.give__lede { color: color-mix(in srgb, #fff 78%, transparent) !important; }
+.give__kicker { color: var(--color-accent-2-200) !important; }
+.give__cta .abtn:not([style*="background"]) {
+  color: #fff !important;
+  border-color: color-mix(in srgb, #fff 45%, transparent) !important;
+}
+
+/* Cards and tags follow the same sharp language */
+.lift, .card, article.lift { border-radius: 0 !important; }
+.tag { border-radius: 0 !important; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-outline { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* Form fields need nothing here: the shared .field-input component in
+   micro.css derives its surface from --color-neutral-100 and its corner from
+   --radius-md, both set above. */
+
+@media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
+</style>
+<link rel="stylesheet" href="micro.css">
+</head>
+<body>
+<!-- Announcement bar: hidden unless it is switched on in Sanity. -->
+<div data-sanity="announcement" style="display:none"></div>
+<div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
+
+  <!-- HEADER -->
+  <nav class="topnav" style="display:flex;align-items:center;gap:28px;padding:18px clamp(20px,5vw,44px);border-bottom:1px solid var(--color-divider);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--color-bg) 90%,transparent);backdrop-filter:blur(8px)">
+    <a href="index.html" style="font-family:var(--font-heading);font-weight:600;letter-spacing:.2em;font-size:22px;color:var(--color-text);text-decoration:none;margin-right:auto">I&nbsp;AM</a>
+    <a class="undl" href="give.html" style="color:inherit;text-decoration:none;font-size:14px">Give</a>
+    <a class="undl" href="groups.html" style="color:inherit;text-decoration:none;font-size:14px">Groups</a>
+    <a class="undl" href="events.html" style="color:inherit;text-decoration:none;font-size:14px">Events</a>
+    <a class="undl" href="prayer.html" style="color:inherit;text-decoration:none;font-size:14px">Prayer</a>
+    <a class="undl" href="about.html" style="color:inherit;text-decoration:none;font-size:14px">About</a>
+    <a class="abtn" href="plan-a-visit.html" style="color:#fff;background:var(--color-accent);text-decoration:none;font-size:14px;font-family:var(--font-heading);font-weight:600;padding:9px 20px;border-radius:4px">Plan a visit</a>
+  </nav>
+
+  <!-- PAGE HEAD -->
+  <header style="border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(40px,5vw,60px) clamp(20px,5vw,44px) clamp(28px,3vw,34px)">
+      <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent);margin-bottom:12px;animation:upIn .7s both .1s">Glendale, AZ</div>
+      <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(40px,5.4vw,68px);line-height:1;letter-spacing:-.02em;margin:0 0 16px;animation:upIn .8s both .2s">Sunday Messages</h1>
+      <nav style="font-size:13px;color:color-mix(in srgb,var(--color-text) 55%,transparent);animation:upIn .8s both .32s">
+        <a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a>
+        <span style="margin:0 8px;color:var(--color-accent)">&#8227;</span>
+        <span style="color:var(--color-text)">Messages</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SERMONS -->
+  <section id="sermons" style="max-width:1180px;margin:0 auto;padding:clamp(32px,4vw,48px) clamp(20px,5vw,44px) clamp(48px,6vw,72px)">
+    <div data-sanity="sermons" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+    </div>
+    <div id="emptyState" style="text-align:center;padding:56px 20px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">
+      <p style="font-family:var(--font-heading);font-size:24px;margin:0 0 8px;color:var(--color-text)">Nothing here just yet</p>
+      <p style="font-size:15px;margin:0">Messages will appear here once they are posted.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid var(--color-divider)"><div class="resp" style="max-width:1120px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,5vw,44px);display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px">
+    <div>
+      <div style="font-family:var(--font-heading);font-weight:600;letter-spacing:.18em;font-size:22px;margin-bottom:12px">I&nbsp;AM</div>
+      <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);max-width:30ch;margin:0">A community learning to follow Jesus together, in the heart of the city.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Gather</span><span>Sundays at 2:00 PM</span><span>6532 N El Mirage Rd</span><span>Glendale, AZ 85307</span></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Explore</span><a class="undl" href="groups.html" style="color:inherit;text-decoration:none">Groups</a><a class="undl" href="events.html" style="color:inherit;text-decoration:none">Events</a><a class="undl" href="sermons.html" style="color:inherit;text-decoration:none">Messages</a><a class="undl" href="gallery.html" style="color:inherit;text-decoration:none">Photos</a><a class="undl" href="prayer.html" style="color:inherit;text-decoration:none">Prayer</a><a class="undl" href="about.html" style="color:inherit;text-decoration:none">About</a></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:14px"><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-bottom:4px">Connect</span><a class="undl" href="give.html" style="color:inherit;text-decoration:none">Give</a><a class="undl" href="index.html" style="color:inherit;text-decoration:none">Home</a><a class="undl" href="mailto:hello@iamchurch.org" style="color:inherit;text-decoration:none">hello@iamchurch.org</a></div>
+  </div></footer>
+
+</div>
+
+<script>
+  (function(){
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var io=reduce?null:new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
+    function observeReveals(){
+      [].slice.call(document.querySelectorAll('.rv:not(.rv-bound)')).forEach(function(el){
+        el.classList.add('rv-bound');
+        if(reduce){el.classList.add('in');}else{io.observe(el);}
+      });
+    }
+    observeReveals();
+    var empty=document.getElementById('emptyState');
+    var grid=document.querySelector('[data-sanity="sermons"]');
+    document.addEventListener('content:updated',function(){
+      observeReveals();
+      if(grid&&empty){empty.style.display=grid.children.length?'none':'';}
+    });
+  })();
+</script>
+<script src="micro.js" defer></script>
+<script src="sanity-content.js" defer></script>
+</body>
+</html>
