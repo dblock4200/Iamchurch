@@ -453,7 +453,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <p style="font-size:15px;margin:0">No events match this filter — try another ministry or type.</p>
     </div>
 
-    <div style="text-align:center;margin-top:40px">
+    <div id="loadMoreWrap" style="text-align:center;margin-top:40px">
       <a class="abtn" href="#" style="border:1px solid var(--color-accent);color:var(--color-accent);font-family:var(--font-heading);font-weight:600;font-size:15px;padding:13px 30px;border-radius:4px;text-decoration:none">Load more events</a>
     </div>
   </section>
@@ -511,6 +511,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       });
       count.textContent='Showing '+shown+' event'+(shown===1?'':'s');
       empty.style.display=shown===0?'':'none';
+      var lm=document.getElementById('loadMoreWrap');
+      if(lm)lm.style.display=shown===0?'none':'';
     }
     chips.forEach(function(btn){btn.addEventListener('click',function(){chips.forEach(function(c){c.classList.remove('on');});btn.classList.add('on');type=btn.getAttribute('data-type');apply();});});
     sel.addEventListener('change',apply);
