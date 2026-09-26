@@ -335,7 +335,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 
         <div class="field">
           <label>Fund</label>
-          <select class="field-input field-input--select is-filled"><option>Tithes &amp; Offerings</option><option>Building &amp; Expansion</option><option>Outreach &amp; Missions</option><option>Benevolence Fund</option></select>
+          <select id="fundSelect" class="field-input field-input--select is-filled"><option value="85739">Tithes &amp; Offerings</option><option value="85740">Building &amp; Expansion</option><option value="85741">Outreach &amp; Missions</option><option value="85739">Benevolence Fund</option></select>
         </div>
 
         <div class="field">
@@ -510,6 +510,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     var state={freq:'one',amt:100,custom:'',method:'card'};
     var btn=document.getElementById('giveBtn');
     var custom=document.getElementById('customAmt');
+    var fundSelect=document.getElementById('fundSelect');
     function segPick(seg,attr,val){[].slice.call(seg.children).forEach(function(b){b.classList.toggle('on',b.getAttribute(attr)===val);});}
     function render(){
       var cur=state.custom?('$'+state.custom):('$'+state.amt);
@@ -521,9 +522,18 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
     custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
     // ChurchTeams hosts the actual giving form; this picker is a preview that
-    // hands the donor off to it to finish securely.
+    // hands the donor off to it to finish securely, with the chosen amount
+    // and fund carried over (GiftType/frequency isn't read from the URL by
+    // their form, so the donor picks that on ChurchTeams' page).
     btn.addEventListener('click',function(){
-      window.open('https://www.churchteams.com/m/Give.asp?oID=25524&aID=NjlCNUQ1NkRGQkM1NjBBNjc1Q0I0QThDNzEzQ0QwMTA%3D','_blank','noopener');
+      var amt=state.custom||state.amt;
+      var params=new URLSearchParams({
+        oID:'25524',
+        aID:'NjlCNUQ1NkRGQkM1NjBBNjc1Q0I0QThDNzEzQ0QwMTA=',
+        Amount:amt,
+        DesignationID:fundSelect.value
+      });
+      window.open('https://www.churchteams.com/m/Give.asp?'+params.toString(),'_blank','noopener');
     });
     render();
   })();
