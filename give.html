@@ -520,6 +520,11 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     document.getElementById('methodSeg').addEventListener('click',function(e){var b=e.target.closest('[data-method]');if(!b)return;state.method=b.getAttribute('data-method');segPick(this,'data-method',state.method);render();});
     document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
     custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
+    // ChurchTeams hosts the actual giving form; this picker is a preview that
+    // hands the donor off to it to finish securely.
+    btn.addEventListener('click',function(){
+      window.open('https://www.churchteams.com/m/Give.asp?oID=25524&aID=NjlCNUQ1NkRGQkM1NjBBNjc1Q0I0QThDNzEzQ0QwMTA%3D','_blank','noopener');
+    });
     render();
   })();
 </script>
