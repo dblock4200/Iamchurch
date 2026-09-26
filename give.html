@@ -512,7 +512,9 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         Amount:amt,
         DesignationID:fundSelect.value
       });
-      window.open('https://www.churchteams.com/m/Give.asp?'+params.toString(),'_blank','noopener');
+      // ChurchTeams' own embed snippet: a fixed-size popup window rather
+      // than a full new tab.
+      window.open('https://www.churchteams.com/m/Give.asp?'+params.toString(),'OnlineGiving','width=600,height=710,scrollbars=yes,toolbar=no,directories=no,location=no,menubar=no,status=no,left=300,top=50');
     });
     render();
   })();
