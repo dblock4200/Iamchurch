@@ -334,21 +334,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         <h2 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 22px">Give a gift</h2>
 
         <div class="field">
-          <label>Fund</label>
-          <select id="fundSelect" class="field-input field-input--select is-filled"><option value="85739">Tithes &amp; Offerings</option><option value="85740">Building &amp; Expansion</option><option value="85741">Outreach &amp; Missions</option><option value="85739">Benevolence Fund</option></select>
-        </div>
-
-        <div class="field">
-          <label>Frequency</label>
-          <div class="seg" id="freqSeg">
-            <button type="button" class="on" data-freq="one">One-time</button>
-            <button type="button" data-freq="week">Weekly</button>
-            <button type="button" data-freq="month">Monthly</button>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Amount</label>
+          <label>Donate</label>
           <div class="amt" id="amtGrid" style="margin-bottom:16px">
             <button type="button" data-amt="25">$25</button>
             <button type="button" data-amt="50">$50</button>
@@ -364,11 +350,16 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         </div>
 
         <div class="field">
-          <label>Method</label>
-          <div class="seg" id="methodSeg">
-            <button type="button" class="on" data-method="card">Card / Bank</button>
-            <button type="button" data-method="crypto">Crypto</button>
-            <button type="button" data-method="stock">Stocks</button>
+          <label>Designation</label>
+          <select id="fundSelect" class="field-input field-input--select is-filled"><option value="85739">Tithes &amp; Offerings</option><option value="85740">Building &amp; Expansion</option><option value="85741">Outreach &amp; Missions</option><option value="85739">Benevolence Fund</option></select>
+        </div>
+
+        <div class="field">
+          <label>Frequency</label>
+          <div class="seg" id="freqSeg">
+            <button type="button" class="on" data-freq="one">One-time</button>
+            <button type="button" data-freq="week">Weekly</button>
+            <button type="button" data-freq="month">Monthly</button>
           </div>
         </div>
 
@@ -518,7 +509,6 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       btn.innerHTML='Give '+cur+word+' <span class="arrow">→</span>';
     }
     document.getElementById('freqSeg').addEventListener('click',function(e){var b=e.target.closest('[data-freq]');if(!b)return;state.freq=b.getAttribute('data-freq');segPick(this,'data-freq',state.freq);render();});
-    document.getElementById('methodSeg').addEventListener('click',function(e){var b=e.target.closest('[data-method]');if(!b)return;state.method=b.getAttribute('data-method');segPick(this,'data-method',state.method);render();});
     document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
     custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
     // ChurchTeams hosts the actual giving form; this picker is a preview that
