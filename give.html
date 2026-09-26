@@ -354,15 +354,6 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
           <select id="fundSelect" class="field-input field-input--select is-filled"><option value="85739">Tithes &amp; Offerings</option><option value="85740">Building &amp; Expansion</option><option value="85741">Outreach &amp; Missions</option><option value="85739">Benevolence Fund</option></select>
         </div>
 
-        <div class="field">
-          <label>Frequency</label>
-          <div class="seg" id="freqSeg">
-            <button type="button" class="on" data-freq="one">One-time</button>
-            <button type="button" data-freq="week">Weekly</button>
-            <button type="button" data-freq="month">Monthly</button>
-          </div>
-        </div>
-
         <button type="button" id="giveBtn" class="abtn" style="width:100%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:17px;padding:16px;border-radius:4px;border:none;cursor:pointer">Give $100 <span class="arrow">→</span></button>
         <div style="display:flex;justify-content:space-between;margin-top:16px;font-size:13px">
           <a class="undl" href="#" style="color:var(--color-accent);text-decoration:none">Manage your account</a>
@@ -498,17 +489,15 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
       document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
     }
-    var state={freq:'one',amt:100,custom:'',method:'card'};
+    var state={amt:100,custom:''};
     var btn=document.getElementById('giveBtn');
     var custom=document.getElementById('customAmt');
     var fundSelect=document.getElementById('fundSelect');
     function segPick(seg,attr,val){[].slice.call(seg.children).forEach(function(b){b.classList.toggle('on',b.getAttribute(attr)===val);});}
     function render(){
       var cur=state.custom?('$'+state.custom):('$'+state.amt);
-      var word={one:'',week:' weekly',month:' monthly'}[state.freq];
-      btn.innerHTML='Give '+cur+word+' <span class="arrow">→</span>';
+      btn.innerHTML='Give '+cur+' <span class="arrow">→</span>';
     }
-    document.getElementById('freqSeg').addEventListener('click',function(e){var b=e.target.closest('[data-freq]');if(!b)return;state.freq=b.getAttribute('data-freq');segPick(this,'data-freq',state.freq);render();});
     document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
     custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
     // ChurchTeams hosts the actual giving form; this picker is a preview that
