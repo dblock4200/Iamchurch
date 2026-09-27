@@ -199,10 +199,6 @@ html { scroll-behavior: smooth; }
   .seg button:last-child{border-right:none}
   .seg button.on{background:var(--color-accent);color:#fff}
   .seg button:not(.on):hover{background:var(--color-accent-100)}
-  .amt{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .amt button{font-family:var(--font-heading);font-size:20px;padding:16px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:4px;color:var(--color-text);cursor:pointer;transition:all .25s;font-variant-numeric:tabular-nums}
-  .amt button:hover{border-color:var(--color-accent);color:var(--color-accent)}
-  .amt button.on{background:var(--color-accent);border-color:var(--color-accent);color:#fff}
   /* Form fields come from the shared .field / .field-input component in
      micro.css — nothing field-related is declared on this page. */
   .faq summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--font-heading);font-weight:400;font-size:20px}
@@ -331,30 +327,10 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       </div>
 
       <div class="rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:clamp(24px,3vw,36px);box-shadow:var(--shadow-md);background:var(--color-bg)">
-        <h2 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 22px">Give a gift</h2>
+        <h2 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 12px">Give a gift</h2>
+        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 24px">Give securely through ChurchTeams. You'll choose your amount and fund on the next page.</p>
 
-        <div class="field">
-          <label>Donate</label>
-          <div class="amt" id="amtGrid" style="margin-bottom:16px">
-            <button type="button" data-amt="25">$25</button>
-            <button type="button" data-amt="50">$50</button>
-            <button type="button" class="on" data-amt="100">$100</button>
-            <button type="button" data-amt="250">$250</button>
-            <button type="button" data-amt="500">$500</button>
-            <button type="button" data-amt="1000">$1000</button>
-          </div>
-          <div class="field__control">
-            <span class="field__icon field__icon--lead" style="font-family:var(--font-heading);font-size:22px">$</span>
-            <input class="field-input field-input--amount field-input--lead" id="customAmt" type="text" inputmode="decimal" placeholder="Other amount" />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Designation</label>
-          <select id="fundSelect" class="field-input field-input--select is-filled"><option value="85739">Tithes &amp; Offerings</option><option value="85740">Building &amp; Expansion</option><option value="85741">Outreach &amp; Missions</option><option value="85739">Benevolence Fund</option></select>
-        </div>
-
-        <button type="button" id="giveBtn" class="abtn" style="width:100%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:17px;padding:16px;border-radius:4px;border:none;cursor:pointer">Give $100 <span class="arrow">→</span></button>
+        <a id="giveBtn" class="abtn" href="https://www.churchteams.com/m/Give.asp?oID=25524&amp;aID=NjlCNUQ1NkRGQkM1NjBBNjc1Q0I0QThDNzEzQ0QwMTA=" target="_blank" rel="noopener" style="display:block;text-align:center;width:100%;box-sizing:border-box;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:17px;padding:16px;border-radius:4px;text-decoration:none">Give online <span class="arrow">→</span></a>
         <div style="display:flex;justify-content:space-between;margin-top:16px;font-size:13px">
           <a class="undl" href="#" style="color:var(--color-accent);text-decoration:none">Manage your account</a>
           <a class="undl" href="#faqs" style="color:var(--color-accent);text-decoration:none">View the FAQs</a>
@@ -375,16 +351,12 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         <div class="lift rv ways-feature" style="grid-column:1;grid-row:span 2;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:32px 28px;display:flex;flex-direction:column">
           <span style="color:var(--color-accent);margin-bottom:16px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>
           <h3 style="font-family:var(--font-heading);font-weight:400;font-size:26px;margin:0 0 10px">The I AM app</h3>
-          <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 20px">Give in a couple of taps, set a recurring gift, and see your history — all from your phone.</p>
-          <div class="plate" style="aspect-ratio:3/4;overflow:hidden;border-radius:4px;margin-top:auto;max-width:200px"><div class="img-slot ks" role="img" aria-label="App giving screen mockup"><span>App giving screen mockup</span></div></div>
+          <span style="display:inline-block;align-self:flex-start;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:999px;padding:5px 12px">Coming soon</span>
         </div>
         <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
           <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
           <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0 0 12px">Text giving</h3>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-family:var(--font-heading);color:var(--color-accent);font-size:18px">1</span><p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Text <strong style="font-family:var(--font-heading)">IAM 50</strong> to <strong style="font-family:var(--font-heading)">77977</strong> for a $50 gift.</p></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span style="font-family:var(--font-heading);color:var(--color-accent);font-size:18px">2</span><p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">After setup, just text an <strong style="font-family:var(--font-heading)">amount</strong> to give again.</p></div>
-          </div>
+          <span style="display:inline-block;align-self:flex-start;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:999px;padding:5px 12px">Coming soon</span>
         </div>
         <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
           <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7v14H6V7l6-3z"/><path d="M12 2v5"/><path d="M10 4h4"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg></span>
@@ -394,7 +366,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         <div class="lift rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:28px 26px">
           <span style="color:var(--color-accent);margin-bottom:14px;display:inline-block"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
           <h3 style="font-family:var(--font-heading);font-weight:400;font-size:23px;margin:0 0 8px">By mail</h3>
-          <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0">Attn: Finance · I AM Church · 6532 N El Mirage Rd, Glendale, AZ 85307.</p>
+          <span style="display:inline-block;align-self:flex-start;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:999px;padding:5px 12px">Coming soon</span>
         </div>
       </div>
     </div>
@@ -489,32 +461,6 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1});
       document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
     }
-    var state={amt:100,custom:''};
-    var btn=document.getElementById('giveBtn');
-    var custom=document.getElementById('customAmt');
-    var fundSelect=document.getElementById('fundSelect');
-    function segPick(seg,attr,val){[].slice.call(seg.children).forEach(function(b){b.classList.toggle('on',b.getAttribute(attr)===val);});}
-    function render(){
-      var cur=state.custom?('$'+state.custom):('$'+state.amt);
-      btn.innerHTML='Give '+cur+' <span class="arrow">→</span>';
-    }
-    document.getElementById('amtGrid').addEventListener('click',function(e){var b=e.target.closest('[data-amt]');if(!b)return;state.amt=+b.getAttribute('data-amt');state.custom='';custom.value='';segPick(this,'data-amt',String(state.amt));render();});
-    custom.addEventListener('input',function(){state.custom=custom.value.replace(/[^0-9.]/g,'');[].slice.call(document.getElementById('amtGrid').children).forEach(function(b){b.classList.remove('on');});render();});
-    // ChurchTeams hosts the actual giving form; this picker is a preview that
-    // hands the donor off to it to finish securely, with the chosen amount
-    // and fund carried over (GiftType/frequency isn't read from the URL by
-    // their form, so the donor picks that on ChurchTeams' page).
-    btn.addEventListener('click',function(){
-      var amt=state.custom||state.amt;
-      var params=new URLSearchParams({
-        oID:'25524',
-        aID:'NjlCNUQ1NkRGQkM1NjBBNjc1Q0I0QThDNzEzQ0QwMTA=',
-        Amount:amt,
-        DesignationID:fundSelect.value
-      });
-      window.open('https://www.churchteams.com/m/Give.asp?'+params.toString(),'_blank','noopener');
-    });
-    render();
   })();
 </script>
 <script src="micro.js" defer></script>
