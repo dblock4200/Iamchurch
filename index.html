@@ -292,11 +292,24 @@ html.cine .hero__cta     { transform: translate3d(0, calc(var(--hp,0) * -10px), 
 .hero--banner .hero__title { font-size: clamp(26px, 2.7vw, 48px); max-width: none; margin-bottom: 18px; }
 .hero--banner .hero__cta .abtn { font-size: 14px !important; padding: 11px 18px !important; }
 @media (max-width: 900px) {
-  .hero--banner { aspect-ratio: auto; display: flex; flex-direction: column; padding-top: var(--nav-h, 120px); }
+  nav.topnav { position: relative !important; background: #1c1b1a !important; }
+  .hero--banner { aspect-ratio: auto; display: flex; flex-direction: column; }
   .hero--banner .hero__bg { position: relative; inset: auto; aspect-ratio: 8 / 3; }
   .hero--banner .hero__scrim, .hero--banner .hero__fade { display: none; }
   .hero--banner .hero__content { position: relative; max-width: none; padding-top: 28px; }
   .hero--banner .hero__title { font-size: clamp(34px, 9vw, 48px); }
+}
+/* Phones: crop the banner's sky/sides so the logo fills the width (the
+   "I AM CHURCH" lettering is ~37% of the banner's width, which fits with margin at 5:4),
+   keep the menu to one row, and tighten the headline block. */
+@media (max-width: 600px) {
+  nav.topnav { gap: 12px !important; padding: 16px 16px !important; flex-wrap: nowrap !important; }
+  nav.topnav a { font-size: 13px !important; white-space: nowrap; }
+  nav.topnav a[href="#top"] { font-size: 18px !important; letter-spacing: .16em !important; }
+  nav.topnav .abtn { display: none; }
+  .hero--banner .hero__bg { aspect-ratio: 5 / 4; }
+  .hero--banner .hero__content { padding-top: 24px; padding-bottom: 36px; }
+  .hero--banner .hero__title { font-size: clamp(30px, 8.6vw, 40px); margin-bottom: 20px; }
 }
 
 /* =========================================================
