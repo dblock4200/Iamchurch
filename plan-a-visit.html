@@ -343,7 +343,11 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <p style="font-size:16px;line-height:1.65;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:60ch;margin:0 auto">No matter where you are in your faith walk, you're welcome here. Fill out the form below and a team member will reach out to make your first visit as smooth as possible — we can't wait to meet you!</p>
     </div>
 
-    <form class="rv rv-d2" onsubmit="return false" style="margin-top:20px">
+    <form id="visitForm" name="plan-a-visit" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="rv rv-d2" style="margin-top:20px">
+      <input type="hidden" name="form-name" value="plan-a-visit" />
+      <p hidden><label>Leave this empty: <input name="bot-field" /></label></p>
+      <input type="hidden" name="children_count" value="0" />
+      <input type="hidden" name="children" value="" />
 
       <!-- STEP 1 · ADULTS -->
       <div data-step-panel="1">
@@ -352,19 +356,19 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
           <span style="font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="color:var(--color-accent)">*</span> required</span>
         </div>
         <div class="field-grid">
-          <div class="field"><label>First <span class="req">*</span></label><input class="field-input" type="text" placeholder="First" /></div>
-          <div class="field"><label>Last <span class="req">*</span></label><input class="field-input" type="text" placeholder="Last" /></div>
-          <div class="field field--wide"><label>Email <span class="req">*</span></label><input class="field-input" type="email" placeholder="you@email.com" /></div>
-          <div class="field field--wide"><label>Street address</label><input class="field-input" type="text" placeholder="6532 N El Mirage Rd" /></div>
-          <div class="field"><label>City</label><input class="field-input" type="text" placeholder="Glendale" /></div>
+          <div class="field"><label>First <span class="req">*</span></label><input class="field-input" type="text" name="first_name" autocomplete="given-name" required placeholder="First" /></div>
+          <div class="field"><label>Last <span class="req">*</span></label><input class="field-input" type="text" name="last_name" autocomplete="family-name" required placeholder="Last" /></div>
+          <div class="field field--wide"><label>Email <span class="req">*</span></label><input class="field-input" type="email" name="email" autocomplete="email" required placeholder="you@email.com" /></div>
+          <div class="field field--wide"><label>Street address</label><input class="field-input" type="text" name="street" autocomplete="street-address" placeholder="123 Main St" /></div>
+          <div class="field"><label>City</label><input class="field-input" type="text" name="city" autocomplete="address-level2" placeholder="Glendale" /></div>
           <div class="field"><label>State</label>
-            <select class="field-input field-input--select"><option value="" disabled selected>Select</option><option>AZ</option><option>CA</option><option>NV</option><option>NM</option><option>UT</option></select>
+            <select class="field-input field-input--select" name="state" autocomplete="address-level1"><option value="" disabled selected>Select</option><option>AZ</option><option>CA</option><option>NV</option><option>NM</option><option>UT</option></select>
           </div>
-          <div class="field"><label>Zip</label><input class="field-input" type="text" inputmode="numeric" placeholder="85307" /></div>
-          <div class="field"><label>Mobile <span class="req">*</span></label><input class="field-input" type="tel" placeholder="(623) 555-0000" /></div>
-          <div class="field"><label>What date are you coming? <span class="req">*</span></label><input class="field-input is-filled" type="date" /></div>
+          <div class="field"><label>Zip</label><input class="field-input" type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="85307" /></div>
+          <div class="field"><label>Mobile <span class="req">*</span></label><input class="field-input" type="tel" name="mobile" autocomplete="tel" required placeholder="(623) 555-0000" /></div>
+          <div class="field"><label>What date are you coming? <span class="req">*</span></label><input class="field-input is-filled" type="date" name="visit_date" required /></div>
           <div class="field field--wide"><label>Service time <span class="req">*</span></label>
-            <select class="field-input field-input--select is-filled"><option>Sunday, 2:00 PM</option></select>
+            <select class="field-input field-input--select is-filled" name="service_time"><option>Sunday, 2:00 PM</option></select>
           </div>
         </div>
         <p style="font-size:12px;line-height:1.55;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin:22px 0 0;max-width:70ch">By providing your phone number you are consenting to receive text messages from I AM related to your visit. If you wish not to receive them, reply STOP at any time.</p>
@@ -376,7 +380,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
           <h3 style="font-family:var(--font-heading);font-weight:600;font-size:28px;margin:0">Your children</h3>
           <span style="font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Optional — skip if none</span>
         </div>
-        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:64ch;margin:0 0 26px">Bringing little ones? Let us know how many so our I AM Kids team can have secure check-in tags ready when you arrive.</p>
+        <p style="font-size:15px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:64ch;margin:0 0 26px">Bringing little ones? Let us know how many so our I AM Kids team can be ready to welcome them.</p>
         <div class="field"><label>How many children?</label>
           <div class="stepper"><button type="button" data-dir="-1">−</button><span id="childCount">0</span><button type="button" data-dir="1">+</button></div>
         </div>
@@ -389,11 +393,11 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
           <h3 style="font-family:var(--font-heading);font-weight:600;font-size:28px;margin:0">Your spouse <span style="font-weight:400;font-size:19px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">(optional)</span></h3>
         </div>
         <div class="field-grid">
-          <div class="field"><label>First</label><input class="field-input" type="text" placeholder="First" /></div>
-          <div class="field"><label>Last</label><input class="field-input" type="text" placeholder="Last" /></div>
-          <div class="field"><label>Email</label><input class="field-input" type="email" placeholder="you@email.com" /></div>
-          <div class="field"><label>Mobile</label><input class="field-input" type="tel" placeholder="(512) 555-0000" /></div>
-          <div class="field field--wide"><label>Anything we should know? <span class="subtle">(optional)</span></label><input class="field-input" type="text" placeholder="Accessibility needs, questions, or just say hi" /></div>
+          <div class="field"><label>First</label><input class="field-input" type="text" name="spouse_first_name" placeholder="First" /></div>
+          <div class="field"><label>Last</label><input class="field-input" type="text" name="spouse_last_name" placeholder="Last" /></div>
+          <div class="field"><label>Email</label><input class="field-input" type="email" name="spouse_email" placeholder="spouse@email.com" /></div>
+          <div class="field"><label>Mobile</label><input class="field-input" type="tel" name="spouse_mobile" placeholder="(623) 555-0000" /></div>
+          <div class="field field--wide"><label>Anything we should know? <span class="subtle">(optional)</span></label><input class="field-input" type="text" name="notes" placeholder="Accessibility needs, questions, or just say hi" /></div>
         </div>
         <div style="background:var(--color-accent-100);border-radius:var(--radius-md);padding:22px 24px;margin-top:30px;display:flex;gap:14px;align-items:flex-start">
           <span style="flex:none;color:var(--color-accent-700);margin-top:1px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
@@ -402,6 +406,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       </div>
 
       <!-- CONTROLS -->
+      <p id="formError" role="alert" style="display:none;margin:22px 0 0;font-size:14px;color:#b3261e"></p>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:36px;flex-wrap:wrap">
         <button type="button" id="backBtn" style="visibility:hidden;font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--color-text);background:none;border:none;cursor:pointer;padding:8px 4px">← Back</button>
         <button type="button" id="nextBtn" class="abtn" style="background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:16px;padding:14px 34px;border-radius:4px;border:none;cursor:pointer">Continue <span class="arrow">→</span></button>
@@ -468,11 +473,42 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       childRows.innerHTML=rows;
       childRows.style.display=children>0?'grid':'none';
     }
-    dots.forEach(function(d){d.addEventListener('click',function(){go(+d.getAttribute('data-goto'));});});
-    nextBtn.addEventListener('click',function(){go(step+1);});
+    dots.forEach(function(d){d.addEventListener('click',function(){var n=+d.getAttribute('data-goto'); if(n>1&&step===1&&!stepValid(1)) return; go(n);});});
+    var form=document.getElementById('visitForm'), errEl=document.getElementById('formError');
+    function stepValid(n){
+      var bad=[].slice.call(panels[n].querySelectorAll('[required]')).filter(function(f){return !f.checkValidity();});
+      if(bad.length){bad[0].reportValidity();return false;}
+      return true;
+    }
+    nextBtn.addEventListener('click',function(){ if(step===1&&!stepValid(1)) return; go(step+1); });
     backBtn.addEventListener('click',function(){go(step-1);});
     [].slice.call(document.querySelectorAll('.stepper [data-dir]')).forEach(function(b){
       b.addEventListener('click',function(){children=Math.max(0,children+(+b.getAttribute('data-dir')));renderChildren();});
+    });
+    // Sends the whole form to Netlify Forms (the children rows are built on
+    // the fly, so they're folded into one "children" field Netlify knows about).
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!stepValid(1)){go(1);return;}
+      var kids=[].slice.call(childRows.querySelectorAll('input')), list=[];
+      for(var i=0;i<kids.length;i+=2){var nm=kids[i].value.trim(),ag=(kids[i+1]&&kids[i+1].value.trim())||'';if(nm||ag)list.push((nm||'Child '+(i/2+1))+(ag?' ('+ag+')':''));}
+      form.elements['children_count'].value=children;
+      form.elements['children'].value=list.join(', ');
+      var data=new URLSearchParams();
+      [].slice.call(form.elements).forEach(function(f){if(f.name&&!(childRows.contains(f)))data.append(f.name,f.value);});
+      errEl.style.display='none'; submitBtn.disabled=true; submitBtn.style.opacity='.7';
+      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+        .then(function(r){if(!r.ok)throw new Error(r.status);
+          form.innerHTML='<div style="text-align:center;padding:40px 10px"><h3 style="font-family:var(--font-heading);font-weight:600;font-size:30px;margin:0 0 12px">You\u2019re all set!</h3>'+
+            '<p style="font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:52ch;margin:0 auto">Thanks for letting us know you\u2019re coming. A team member will reach out before Sunday. Service starts at 2:00 PM \u2014 we can\u2019t wait to meet you.</p></div>';
+          if(dots[0]) dots[0].parentElement.style.display='none';
+          go(1);
+        })
+        .catch(function(){
+          submitBtn.disabled=false; submitBtn.style.opacity='';
+          errEl.textContent='Sorry, something went wrong sending your info. Please try again in a moment.';
+          errEl.style.display='';
+        });
     });
     renderChildren(); render();
   })();

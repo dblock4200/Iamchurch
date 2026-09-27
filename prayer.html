@@ -353,26 +353,30 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 
   <!-- REQUEST FORM -->
   <section id="request-form" style="max-width:900px;margin:0 auto;padding:clamp(8px,2vw,16px) clamp(20px,5vw,44px) clamp(48px,6vw,80px)">
-    <form class="rv" onsubmit="return false" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:clamp(24px,3.5vw,44px);box-shadow:var(--shadow-sm)">
+    <form id="prayerForm" name="prayer-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="rv" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:clamp(24px,3.5vw,44px);box-shadow:var(--shadow-sm)">
 
+      <input type="hidden" name="form-name" value="prayer-request" />
+      <input type="hidden" name="request_type" id="requestType" value="Prayer request" />
+      <p hidden><label>Leave this empty: <input name="bot-field" /></label></p>
       <h3 id="formTitle" style="font-family:var(--font-heading);font-weight:600;font-size:24px;margin:0 0 6px">Prayer request</h3>
       <p id="formNote" style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin:0 0 22px">Our prayer team will carry this with you this week.</p>
 
       <div class="field" style="margin-bottom:34px"><label id="promptLabel">How can we pray for you today? <span class="req">*</span></label>
-        <textarea id="promptField" class="field-input field-input--area" rows="5" placeholder="Share whatever's on your heart — as much or as little as you'd like."></textarea>
+        <textarea id="promptField" name="message" required class="field-input field-input--area" rows="5" placeholder="Share whatever's on your heart — as much or as little as you'd like."></textarea>
         <label class="field-check" style="margin-top:18px">
-          <input type="checkbox" /> Keep my request anonymous
+          <input type="checkbox" name="anonymous" value="Yes" /> Keep my request anonymous
         </label>
       </div>
 
       <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);border-bottom:1px solid var(--color-divider);padding-bottom:12px;margin-bottom:22px">Contact info</div>
       <div class="field-grid">
-        <div class="field"><label>First name <span class="req">*</span></label><input class="field-input" type="text" placeholder="First" /></div>
-        <div class="field"><label>Last name <span class="req">*</span></label><input class="field-input" type="text" placeholder="Last" /></div>
-        <div class="field"><label>Email address <span class="req">*</span></label><input class="field-input" type="email" placeholder="you@email.com" /></div>
-        <div class="field"><label>Phone number</label><input class="field-input" type="tel" placeholder="(512) 555-0000" /></div>
+        <div class="field"><label>First name <span class="req">*</span></label><input class="field-input" type="text" name="first_name" autocomplete="given-name" required placeholder="First" /></div>
+        <div class="field"><label>Last name <span class="req">*</span></label><input class="field-input" type="text" name="last_name" autocomplete="family-name" required placeholder="Last" /></div>
+        <div class="field"><label>Email address <span class="req">*</span></label><input class="field-input" type="email" name="email" autocomplete="email" required placeholder="you@email.com" /></div>
+        <div class="field"><label>Phone number</label><input class="field-input" type="tel" name="phone" autocomplete="tel" placeholder="(623) 555-0000" /></div>
       </div>
 
+      <p id="formError" role="alert" style="display:none;margin:22px 0 0;font-size:14px;color:#b3261e"></p>
       <div style="display:flex;align-items:center;gap:18px;margin-top:34px;flex-wrap:wrap">
         <button type="submit" id="submitBtn" class="abtn" style="background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:600;font-size:16px;padding:14px 36px;border-radius:4px;border:none;cursor:pointer">Send my request <span class="arrow">→</span></button>
         <span style="font-size:13px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Held in confidence by our care team</span>
@@ -395,7 +399,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     <div class="faq">
       <details class="rv"><summary>Who sees my prayer request?<span class="pm"></span></summary><p>Only our trusted prayer and care team. Requests are held in confidence and never shared publicly without your permission.</p></details>
       <details class="rv"><summary>Can I stay anonymous?<span class="pm"></span></summary><p>Absolutely. Check the box on the form and we'll pray without any identifying details — you can still leave contact info if you'd like a follow-up.</p></details>
-      <details class="rv"><summary>Is there urgent or crisis support?<span class="pm"></span></summary><p>For a hospital visit, loss, or urgent need, note it in your request or call (512) 555-0142 and our care pastor will respond as soon as possible.</p></details>
+      <details class="rv"><summary>Is there urgent or crisis support?<span class="pm"></span></summary><p>For a hospital visit, loss, or urgent need, note it in your request and our pastors will respond as soon as possible. In an emergency, please call 911.</p></details>
       <details class="rv"><summary>Can someone pray with me in person?<span class="pm"></span></summary><p>Yes. A prayer team is available at the front after the Sunday service — no appointment needed, just come find us.</p></details>
       <div style="border-top:1px solid var(--color-divider)"></div>
     </div>
@@ -435,10 +439,32 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         btn.classList.add('on');
         var c=copy[btn.getAttribute('data-help')];
         fTitle.textContent=c.title; fNote.textContent=c.note;
+        document.getElementById('requestType').value=c.title;
         pLabel.innerHTML=c.label+' <span class="req">*</span>';
         pField.setAttribute('placeholder',c.ph);
         sBtn.innerHTML=c.submit+' <span class="arrow">→</span>';
       });
+    });
+    // Send to Netlify Forms, then swap the form for a thank-you note.
+    var form=document.getElementById('prayerForm'), errEl=document.getElementById('formError');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){form.reportValidity();return;}
+      var data=new URLSearchParams(); [].slice.call(form.elements).forEach(function(f){
+        if(!f.name) return; if(f.type==='checkbox'){ if(f.checked) data.append(f.name,f.value); } else data.append(f.name,f.value);
+      });
+      var kind=document.getElementById('requestType').value;
+      errEl.style.display='none'; sBtn.disabled=true; sBtn.style.opacity='.7';
+      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+        .then(function(r){ if(!r.ok) throw new Error(r.status);
+          var msg = kind==='Prayer request' ? 'Thank you for trusting us with this. Our prayer team will be praying with you this week.'
+                  : kind==='Ask a question' ? 'Thanks for reaching out. We\u2019ll get back to you soon.'
+                  : 'Thank you for sharing what God is doing. It encourages all of us.';
+          form.innerHTML='<div style="text-align:center;padding:30px 10px"><h3 style="font-family:var(--font-heading);font-weight:600;font-size:28px;margin:0 0 12px">Received \u2014 thank you</h3>'+
+            '<p style="font-size:16px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:50ch;margin:0 auto">'+msg+'</p></div>';
+        })
+        .catch(function(){ sBtn.disabled=false; sBtn.style.opacity='';
+          errEl.textContent='Sorry, something went wrong sending this. Please try again in a moment.'; errEl.style.display=''; });
     });
   })();
 </script>
