@@ -206,9 +206,8 @@
         '<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);' +
         'margin:0">' + esc(ev.description || '') + '</p>' +
         (ev.signupUrl
-          ? '<a class="abtn" href="' + esc(ev.signupUrl) + '" style="margin-top:16px;align-self:flex-start;' +
-            'font-size:13px;text-decoration:none;border:1px solid var(--color-accent);' +
-            'color:var(--color-accent)">Sign up</a>'
+          ? '<a class="reg-btn" href="' + esc(ev.signupUrl) + '" target="_blank" rel="noopener">' +
+            'Sign up <span class="arrow">→</span></a>'
           : '') +
       '</div>';
 
@@ -250,10 +249,8 @@
                '<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;' +
                'color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:2px">' + meta + '</div>' +
                (g.signupUrl
-                 ? '<a class="abtn" href="' + esc(g.signupUrl) + '" target="_blank" rel="noopener" ' +
-                   'style="margin-top:6px;align-self:flex-start;font-family:var(--font-heading);font-weight:600;' +
-                   'font-size:14px;padding:11px 22px;border-radius:4px;text-decoration:none;' +
-                   'background:var(--color-accent);color:#fff">Register <span class="arrow">→</span></a>'
+                 ? '<a class="reg-btn" href="' + esc(g.signupUrl) + '" target="_blank" rel="noopener">' +
+                   'Register <span class="arrow">→</span></a>'
                  : '') +
              '</div>' +
            '</article>';

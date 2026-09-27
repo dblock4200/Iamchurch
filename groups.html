@@ -286,7 +286,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 
 @media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
 </style>
-<link rel="stylesheet" href="micro.css">
+<link rel="stylesheet" href="micro.css?v=3">
 </head>
 <body>
 <!-- Announcement bar: hidden unless it is switched on in Sanity. -->
@@ -498,7 +498,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       var shown=0;
       cards.forEach(function(card){
         var match=(active==='all'||card.getAttribute('data-cat')===active);
-        card.style.display=match?'':'none';
+        card.style.display=match?'flex':'none';
         if(match)shown++;
       });
       count.textContent=shown+' group'+(shown===1?'':'s')+' accepting members';

@@ -291,7 +291,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 
 @media (prefers-reduced-motion: reduce) { .abtn:hover { transform: none; } }
 </style>
-<link rel="stylesheet" href="micro.css">
+<link rel="stylesheet" href="micro.css?v=3">
 </head>
 <body>
 <!-- Announcement bar: hidden unless it is switched on in Sanity. -->
@@ -507,7 +507,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       items.forEach(function(it){
         var cats=it.getAttribute('data-cats').split(' ');
         var m=(type==='all'||cats.indexOf(type)>-1)&&(min==='All Ministries'||it.getAttribute('data-ministry')===min);
-        it.style.display=m?'':'none'; if(m)shown++;
+        it.style.display=m?'flex':'none'; if(m)shown++;
       });
       count.textContent='Showing '+shown+' event'+(shown===1?'':'s');
       empty.style.display=shown===0?'':'none';
