@@ -180,6 +180,8 @@ html { scroll-behavior: smooth; }
    !important overrides the inline grid-template-columns the layouts use. */
 @media (max-width: 900px) {
   .resp { grid-template-columns: 1fr !important; }
+  .about-hero__logo { order: -1; justify-content: flex-start !important; }
+  .about-hero__logo img { max-width: 150px !important; }
   .resp-2 { grid-template-columns: repeat(2, 1fr) !important; }
   .topnav { gap: 16px !important; flex-wrap: wrap; }
 }
@@ -299,15 +301,17 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 
   <!-- INTRO + HERO -->
   <header style="max-width:1120px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,5vw,44px) clamp(40px,5vw,64px)">
-    <div style="max-width:920px">
+    <div class="resp about-hero" style="display:grid;grid-template-columns:2fr 1fr;gap:clamp(32px,4vw,56px);align-items:center">
+    <div>
       <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent);margin-bottom:20px;animation:upIn .7s both .1s">See what God can do through you</div>
       <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(32px,4.3vw,56px);line-height:1.08;letter-spacing:-.015em;margin:0 0 28px;animation:upIn .8s both .2s">We're here to help you grow in your faith and step confidently into your God-given purpose.</h1>
       <p style="font-size:18px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 74%,transparent);margin:0;max-width:62ch;animation:upIn .8s both .34s">We've seen lives transformed — people meeting Christ for the first time and believers deepening their walk with Him, both in this room and across our community. Through heartfelt worship and clear, practical teaching, you'll find hope here and space to discover who God created you to be.</p>
     </div>
+      <div class="about-hero__logo" style="display:flex;justify-content:center;animation:upIn .9s both .3s">
+        <img src="images/logo-large.webp" alt="I AM Church logo" width="634" height="720" style="width:100%;max-width:300px;height:auto;display:block">
+      </div>
+    </div>
   </header>
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,44px) clamp(48px,6vw,72px)">
-    <div class="plate rv" style="aspect-ratio:21/9;overflow:hidden;border-radius:4px"><img src="images/worship-stage.jpg" alt="Pastor teaching on stage at I AM Church" class="ks" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-  </div>
 
   <!-- MISSION BANNER -->
   <section style="background:var(--color-neutral-900);color:var(--color-neutral-100)">
