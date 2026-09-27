@@ -276,6 +276,29 @@ html.cine .hero__eyebrow { transform: translate3d(0, calc(var(--hp,0) * -34px), 
 html.cine .hero__title   { transform: translate3d(0, calc(var(--hp,0) * -22px), 0); opacity: calc(1 - var(--hp,0) * 1.05); }
 html.cine .hero__cta     { transform: translate3d(0, calc(var(--hp,0) * -10px), 0); opacity: calc(1 - var(--hp,0) * 0.9); }
 
+/* Banner hero: the banner is wide (8:3) with its logo in the middle, so the
+   hero takes the banner's shape (no zoom/crop) and the headline sits small in
+   the lower-left, clear of the logo. Phones stack nav · banner · headline. */
+.hero--banner { height: auto; min-height: 0; max-height: none; aspect-ratio: 8 / 3; background: #1c1b1a; }
+.hero--banner .hero__bg, html.cine .hero--banner .hero__bg { inset: 0; transform: none; filter: none; }
+.hero--banner .hero__scrim {
+  background:
+    linear-gradient(180deg, rgba(20,19,18,.5) 0%, rgba(20,19,18,0) 18%),
+    radial-gradient(ellipse 42% 75% at 0% 100%, rgba(20,19,18,.8) 0%, rgba(20,19,18,.45) 55%, rgba(20,19,18,0) 100%);
+}
+.hero--banner .hero__content { right: auto; max-width: 31%; }
+.hero--banner .hero__eyebrow span.txt { color: rgba(255,255,255,.92); text-shadow: 0 1px 6px rgba(0,0,0,.45); }
+.hero--banner .hero__eyebrow span.line { background: #fff; }
+.hero--banner .hero__title { font-size: clamp(26px, 2.7vw, 48px); max-width: none; margin-bottom: 18px; }
+.hero--banner .hero__cta .abtn { font-size: 14px !important; padding: 11px 18px !important; }
+@media (max-width: 900px) {
+  .hero--banner { aspect-ratio: auto; display: flex; flex-direction: column; padding-top: var(--nav-h, 120px); }
+  .hero--banner .hero__bg { position: relative; inset: auto; aspect-ratio: 8 / 3; }
+  .hero--banner .hero__scrim, .hero--banner .hero__fade { display: none; }
+  .hero--banner .hero__content { position: relative; max-width: none; padding-top: 28px; }
+  .hero--banner .hero__title { font-size: clamp(34px, 9vw, 48px); }
+}
+
 /* =========================================================
    MOMENT 2 — THIS WEEKEND: the statement grows
    ========================================================= */
@@ -472,7 +495,8 @@ html.cine .give__cta {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero { height: auto; min-height: 0; }
-  .hero__content { position: relative; animation: none; padding-top: 46vh; }
+  .hero:not(.hero--banner) .hero__content { position: relative; animation: none; padding-top: 46vh; }
+  .hero--banner .hero__content { animation: none; }
 }
 </style>
 <style>
@@ -581,8 +605,8 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
   </nav>
 
   <!-- ===================== MOMENT 1 · HERO ===================== -->
-  <header id="top" class="hero" data-hero>
-    <div class="hero__bg"><img src="images/hero.jpg" alt="Pastor teaching on the platform at I AM Church" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+  <header id="top" class="hero hero--banner" data-hero>
+    <div class="hero__bg"><img src="images/home-banner.webp" alt="I AM Church, est. 2017 — logo over a desert sunrise with a cross on a mountain ridge" style="width:100%;height:100%;object-fit:cover;display:block"></div>
     <div class="hero__scrim"></div>
     <div class="hero__fade"></div>
     <div class="hero__content">
