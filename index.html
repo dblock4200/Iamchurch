@@ -326,6 +326,12 @@ html.cine .hero__cta     { transform: translate3d(0, calc(var(--hp,0) * -10px), 
   color: color-mix(in srgb, var(--color-text) 60%, transparent); margin-bottom: 4px;
 }
 .weekend__time-v { font-family: var(--font-heading); font-size: 27px; font-variant-numeric: tabular-nums; }
+.weekend__addr { display: block; color: inherit; text-decoration: none; }
+.weekend__addr .weekend__time-v { display: block; }
+.weekend__addr-sub { display: block; font-size: 15px; margin-top: 2px;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+.weekend__addr-dir { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--color-accent); }
+.weekend__addr:hover .weekend__addr-dir { text-decoration: underline; }
 
 html.cine .weekend__warm { opacity: calc(clamp(0, calc((var(--p,0) - 0.12) / 0.5), 1) * 0.7); }
 html.cine .weekend__statement {
@@ -714,7 +720,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
           </div>
           <div class="weekend__time cine-lyr" style="--d:.08">
             <div class="weekend__time-k">Where</div>
-            <div class="weekend__time-v">Glendale, AZ</div>
+            <a class="weekend__addr" href="https://www.google.com/maps/search/?api=1&amp;query=6532%20N%20El%20Mirage%20Rd%2C%20Glendale%2C%20AZ%2085307" target="_blank" rel="noopener"><span class="weekend__time-v">6532 N El Mirage Rd</span><span class="weekend__addr-sub">Glendale, AZ 85307</span><span class="weekend__addr-dir">Get directions <span class="arrow">→</span></span></a>
           </div>
         </div>
       </div>
@@ -736,30 +742,33 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
       <a class="undl" href="groups.html" style="color:var(--color-accent);text-decoration:none;font-size:14px">See all groups <span class="arrow">→</span></a>
     </div>
     <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
-      <article class="lift rv" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden">
+      <a href="groups.html#find" class="lift rv" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit">
         <div class="plate" style="aspect-ratio:3/2;border-width:4px;overflow:hidden"><img src="images/kids-retreat.jpg" alt="Kids from I AM Kids smiling with a leader outdoors, holding their bug-catcher kits" class="ks" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block"></div>
         <div style="padding:22px;display:flex;flex-direction:column;gap:8px;flex:1">
           <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">Newborn – 5th</div>
           <h3 style="font-family:var(--font-heading);font-size:22px;font-weight:400;margin:0">I AM Kids</h3>
           <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0;flex:1">Safe, joyful rooms where children know they're loved — every Sunday.</p>
+          <span style="font-size:12px;color:var(--color-accent-2);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:2px">Learn more <span class="arrow">→</span></span>
         </div>
-      </article>
-      <article class="lift rv rv-d1" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden">
+      </a>
+      <a href="groups.html#find" class="lift rv rv-d1" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit">
         <div class="plate" style="aspect-ratio:3/2;border-width:4px;overflow:hidden"><img src="images/students.jpg" alt="Young adults hanging out together at a retreat" class="ks" style="width:100%;height:100%;object-fit:cover;display:block"></div>
         <div style="padding:22px;display:flex;flex-direction:column;gap:8px;flex:1">
           <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">20s &amp; 30s</div>
           <h3 style="font-family:var(--font-heading);font-size:22px;font-weight:400;margin:0">Young Adults</h3>
           <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0;flex:1">Faith, friendship, and figuring life out together, in the same season.</p>
+          <span style="font-size:12px;color:var(--color-accent-2);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:2px">Learn more <span class="arrow">→</span></span>
         </div>
-      </article>
-      <article class="lift rv rv-d2" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden">
+      </a>
+      <a href="groups.html#find" class="lift rv rv-d2" style="display:flex;flex-direction:column;border:1px solid var(--color-divider);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit">
         <div class="plate" style="aspect-ratio:3/2;border-width:4px;overflow:hidden"><img src="images/small-group-table.jpg" alt="Friends gathered around a table for a small group study" class="ks" style="width:100%;height:100%;object-fit:cover;display:block"></div>
         <div style="padding:22px;display:flex;flex-direction:column;gap:8px;flex:1">
           <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">Get started</div>
           <h3 style="font-family:var(--font-heading);font-size:22px;font-weight:400;margin:0">Connections</h3>
           <p style="font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0;flex:1">New here? This is the easiest way to meet people and find your next step.</p>
+          <span style="font-size:12px;color:var(--color-accent-2);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:2px">Learn more <span class="arrow">→</span></span>
         </div>
-      </article>
+      </a>
     </div>
   </section>
 

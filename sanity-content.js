@@ -365,6 +365,21 @@
   function renderSermons(sermons){ return fill(mount('sermons'), (sermons || []).map(sermonCard).join('')); }
   function renderGallery(albums) { return fill(mount('gallery'), (albums  || []).map(albumBlock).join('')); }
 
+  // An address as a tap-for-directions link: street on the first line,
+  // "City, ST ZIP" underneath (split at the first comma).
+  function addressLink(value) {
+    var v = String(value || '').trim();
+    var cut = v.indexOf(',');
+    var street = cut > -1 ? v.slice(0, cut) : v;
+    var rest = cut > -1 ? v.slice(cut + 1).trim() : '';
+    return '<a class="weekend__addr" href="https://www.google.com/maps/search/?api=1&query=' +
+             encodeURIComponent(v) + '" target="_blank" rel="noopener">' +
+             '<span class="weekend__time-v">' + esc(street) + '</span>' +
+             (rest ? '<span class="weekend__addr-sub">' + esc(rest) + '</span>' : '') +
+             '<span class="weekend__addr-dir">Get directions <span class="arrow">→</span></span>' +
+           '</a>';
+  }
+
   function renderSettings(st) {
     if (!st) return false;
     var touched = false;
@@ -386,7 +401,9 @@
       times.innerHTML = st.serviceTimes.map(function (t, i) {
         return '<div class="weekend__time cine-lyr" style="--d:' + (i * 0.08).toFixed(2) + '">' +
                  '<div class="weekend__time-k">' + esc(t.label) + '</div>' +
-                 '<div class="weekend__time-v">' + esc(t.value) + '</div>' +
+                 (/^(where|address|location)$/i.test(String(t.label || '').trim())
+                   ? addressLink(t.value)
+                   : '<div class="weekend__time-v">' + esc(t.value) + '</div>') +
                '</div>';
       }).join('');
       touched = true;
