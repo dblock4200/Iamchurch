@@ -415,3 +415,10 @@ textarea.field-input,
   background:color-mix(in srgb,var(--color-accent) 27%,transparent);
   border-color:color-mix(in srgb,var(--color-accent) 60%,transparent);
 }
+
+/* Phones: keep the nav's "Plan a visit" button compact so the pinned menu
+   stays slim (it wraps to its own short row under the links). */
+@media (max-width: 600px) {
+  nav.topnav { padding-top: 12px !important; padding-bottom: 12px !important; row-gap: 8px !important; }
+  nav.topnav .abtn { font-size: 11px !important; letter-spacing: .06em; padding: 7px 14px !important; box-shadow: none !important; }
+}
