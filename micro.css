@@ -405,13 +405,13 @@ textarea.field-input,
   display:inline-flex; align-items:center; gap:6px;
   margin-top:auto; align-self:flex-start;
   padding:9px 18px; border-radius:999px;
-  background:color-mix(in srgb,var(--color-accent) 9%,transparent);
-  border:1px solid color-mix(in srgb,var(--color-accent) 26%,transparent);
+  background:color-mix(in srgb,var(--color-accent) 18%,transparent);
+  border:1px solid color-mix(in srgb,var(--color-accent) 40%,transparent);
   color:var(--color-accent); text-decoration:none;
   font-family:var(--font-heading); font-weight:600; font-size:13px; letter-spacing:.02em;
   transition:background-color .25s ease,border-color .25s ease;
 }
 .reg-btn:hover{
-  background:color-mix(in srgb,var(--color-accent) 16%,transparent);
-  border-color:color-mix(in srgb,var(--color-accent) 45%,transparent);
+  background:color-mix(in srgb,var(--color-accent) 27%,transparent);
+  border-color:color-mix(in srgb,var(--color-accent) 60%,transparent);
 }
