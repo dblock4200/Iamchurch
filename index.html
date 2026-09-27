@@ -283,7 +283,8 @@ html.cine .hero__cta     { transform: translate3d(0, calc(var(--hp,0) * -10px), 
 .hero__eyebrow span.txt { color: rgba(255,255,255,.9); text-shadow: 0 1px 6px rgba(0,0,0,.5); }
 /* Phones: keep the menu to one row (the hero already has "Plan your visit"). */
 @media (max-width: 600px) {
-  .four-words { display: grid !important; grid-template-columns: 1fr 1fr; gap: 28px 20px !important; }
+  .four-words { flex-wrap: nowrap !important; gap: 10px !important; padding-left: 16px !important; padding-right: 16px !important; }
+  .four-words > div { font-size: clamp(11px, 3.6vw, 16px) !important; white-space: nowrap; }
   nav.topnav { gap: 12px !important; padding: 16px 16px !important; flex-wrap: nowrap !important; }
   nav.topnav a { font-size: 13px !important; white-space: nowrap; }
   nav.topnav a[href="#top"] { font-size: 18px !important; letter-spacing: .16em !important; }
