@@ -769,39 +769,11 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
         <a class="undl" href="events.html" style="color:var(--color-accent);text-decoration:none;font-size:14px">Full calendar <span class="arrow">→</span></a>
       </div>
       <div>
-        <a class="rv event-row" href="#events" style="display:grid;grid-template-columns:96px 1fr auto;gap:24px;align-items:center;padding:20px 0;border-top:1px solid var(--color-divider);text-decoration:none;color:inherit">
-          <div style="text-align:center">
-            <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">Jun</div>
-            <div style="font-family:var(--font-heading);font-size:40px;line-height:1;font-variant-numeric:tabular-nums">14</div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-heading);font-size:24px;font-weight:400;margin:0 0 4px">Neighborhood Serve Day</h3>
-            <div style="font-size:13px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">9:00 AM · Church parking lot · all ages welcome</div>
-          </div>
-          <span class="tag tag-outline event-tag">Outreach</span>
-        </a>
-        <a class="rv event-row" href="#events" style="display:grid;grid-template-columns:96px 1fr auto;gap:24px;align-items:center;padding:20px 0;border-top:1px solid var(--color-divider);text-decoration:none;color:inherit">
-          <div style="text-align:center">
-            <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">Jun</div>
-            <div style="font-family:var(--font-heading);font-size:40px;line-height:1;font-variant-numeric:tabular-nums">21</div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-heading);font-size:24px;font-weight:400;margin:0 0 4px">Baptism Sunday &amp; Potluck</h3>
-            <div style="font-size:13px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">After service · lunch on the lawn to follow</div>
-          </div>
-          <span class="tag tag-outline event-tag">Gathering</span>
-        </a>
-        <a class="rv event-row" href="#events" style="display:grid;grid-template-columns:96px 1fr auto;gap:24px;align-items:center;padding:20px 0;border-top:1px solid var(--color-divider);text-decoration:none;color:inherit">
-          <div style="text-align:center">
-            <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">Jun</div>
-            <div style="font-family:var(--font-heading);font-size:40px;line-height:1;font-variant-numeric:tabular-nums">28</div>
-          </div>
-          <div>
-            <h3 style="font-family:var(--font-heading);font-size:24px;font-weight:400;margin:0 0 4px">Newcomer Dinner</h3>
-            <div style="font-size:13px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">6:00 PM · Fellowship Hall · childcare provided</div>
-          </div>
-          <span class="tag tag-outline event-tag">First visit</span>
-        </a>
+        <!-- Filled from Sanity with the next 3 upcoming events (sanity-content.js).
+             This row only shows if the live calendar can't be reached. -->
+        <div data-sanity="upcoming">
+          <a class="event-row" href="events.html" style="display:block;padding:20px 0;border-top:1px solid var(--color-divider);text-decoration:none;color:inherit;font-size:15px">See everything on the calendar on our <span style="color:var(--color-accent)">events page <span class="arrow">→</span></span></a>
+        </div>
         <div style="border-top:1px solid var(--color-divider)"></div>
       </div>
     </div>

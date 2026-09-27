@@ -97,11 +97,32 @@
     return isNaN(d.getTime()) ? null : d;
   }
 
-  function timeLabel(d) {
-    var h = d.getHours(), m = d.getMinutes();
-    var ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12; if (h === 0) h = 12;
-    return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+  // Event times are stored in UTC; show them as church (Arizona) time for
+  // every visitor, not in whatever time zone their device happens to be in.
+  var TZ = 'America/Phoenix';
+  function local(d) {
+    var out = {};
+    try {
+      new Intl.DateTimeFormat('en-US', {timeZone: TZ, year: 'numeric', month: 'numeric',
+        day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true})
+        .formatToParts(d).forEach(function (p) { out[p.type] = p.value; });
+    } catch (e) {
+      out = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate(),
+             hour: (d.getHours() % 12) || 12, minute: ('0' + d.getMinutes()).slice(-2),
+             dayPeriod: d.getHours() >= 12 ? 'PM' : 'AM'};
+    }
+    return {day: +out.day, mon: MONTHS[+out.month - 1], year: +out.year,
+            time: out.hour + ':' + out.minute + ' ' + String(out.dayPeriod).toUpperCase()};
+  }
+  function timeLabel(d) { return local(d).time; }
+
+  // Still upcoming = hasn't started more than a few hours ago (no end times).
+  function upcomingOnly(events) {
+    var cutoff = Date.now() - 3 * 3600 * 1000;
+    return (events || []).filter(function (ev) {
+      var d = parseDate(ev.startsAt);
+      return d && d.getTime() >= cutoff;
+    });
   }
 
   function icon(paths) {
@@ -165,10 +186,10 @@
     var datestack = d
       ? '<div style="display:flex;align-items:baseline;gap:8px">' +
           '<span style="font-family:var(--font-heading);font-size:34px;line-height:.9;' +
-          'color:var(--color-accent);font-variant-numeric:tabular-nums">' + d.getDate() + '</span>' +
+          'color:var(--color-accent);font-variant-numeric:tabular-nums">' + local(d).day + '</span>' +
           '<span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;' +
           'line-height:1.2;color:color-mix(in srgb,var(--color-text) 60%,transparent)">' +
-          MONTHS[d.getMonth()] + '<br />' + d.getFullYear() + '</span>' +
+          local(d).mon + '<br />' + local(d).year + '</span>' +
         '</div>'
       : '<div></div>';
 
@@ -180,7 +201,7 @@
           'color:color-mix(in srgb,var(--color-text) 60%,transparent)">' + meta + '</div>' +
         '</div>' +
         '<h3 class="evtitle" style="font-family:var(--font-heading);font-weight:400;font-size:23px;' +
-        'line-height:1.12;margin:0 0 12px;transition:color .3s">' + esc(ev.title) + '</h3>' +
+        'line-height:1.12;margin:0 0 12px;transition:color .3s">' + esc((ev.title || '').trim()) + '</h3>' +
         '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px">' + tagPills + '</div>' +
         '<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);' +
         'margin:0">' + esc(ev.description || '') + '</p>' +
@@ -309,12 +330,37 @@
   function renderEvents(events) {
     var el = mount('events');
     if (!el) return false;
-    var start = new Date(); start.setHours(0, 0, 0, 0);
-    var upcoming = (events || []).filter(function (ev) {
-      var d = parseDate(ev.startsAt);
-      return d && d >= start;
-    });
-    return fill(el, upcoming.map(eventCard).join(''));
+    return fill(el, upcomingOnly(events).map(eventCard).join(''));
+  }
+
+  // Homepage "What's coming up": the next three events, as compact rows that
+  // mirror the page's .event-row markup. Each links to the full calendar.
+  function upcomingRow(ev) {
+    var d = parseDate(ev.startsAt), t = local(d);
+    var meta = [t.time, ev.location].filter(Boolean).map(function (x) { return esc(String(x).trim()); }).join(' · ');
+    return '<a class="event-row" href="events.html" style="display:grid;grid-template-columns:96px 1fr auto;' +
+             'gap:24px;align-items:center;padding:20px 0;border-top:1px solid var(--color-divider);' +
+             'text-decoration:none;color:inherit">' +
+             '<div style="text-align:center">' +
+               '<div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent)">' + t.mon + '</div>' +
+               '<div style="font-family:var(--font-heading);font-size:40px;line-height:1;font-variant-numeric:tabular-nums">' + t.day + '</div>' +
+             '</div>' +
+             '<div>' +
+               '<h3 style="font-family:var(--font-heading);font-size:24px;font-weight:400;margin:0 0 4px">' + esc((ev.title || '').trim()) + '</h3>' +
+               '<div style="font-size:13px;color:color-mix(in srgb,var(--color-text) 60%,transparent)">' + meta + '</div>' +
+             '</div>' +
+             (ev.ministry ? '<span class="tag tag-outline event-tag">' + esc(ev.ministry) + '</span>' : '<span></span>') +
+           '</a>';
+  }
+
+  function renderUpcoming(events) {
+    var el = mount('upcoming');
+    if (!el) return false;
+    var next = upcomingOnly(events).slice(0, 3);
+    return fill(el, next.length
+      ? next.map(upcomingRow).join('')
+      : '<p style="margin:0;padding:20px 0;border-top:1px solid var(--color-divider);font-size:15px;' +
+        'color:color-mix(in srgb,var(--color-text) 70%,transparent)">Nothing on the calendar right now — check back soon.</p>');
   }
 
   function renderGroups(groups)  { return fill(mount('groups'),  (groups  || []).map(groupCard).join('')); }
@@ -387,6 +433,7 @@
     fetchContent().then(function (data) {
       var changed = false;
       changed = renderEvents(data.events)     || changed;
+      changed = renderUpcoming(data.events)   || changed;
       changed = renderGroups(data.groups)     || changed;
       changed = renderSermons(data.sermons)   || changed;
       changed = renderGallery(data.albums)    || changed;
