@@ -424,3 +424,16 @@ textarea.field-input,
   nav.topnav > a:first-child { font-size: 18px !important; letter-spacing: .16em !important; }
   nav.topnav .abtn { display: none !important; }
 }
+
+/* Event cards: action row (Sign up / Add to calendar) pinned to the card bottom. */
+.ev-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; margin-top: auto; padding-top: 16px; }
+.ev-actions .reg-btn { margin-top: 0; }
+.cal-add { position: relative; }
+.cal-add > summary { list-style: none; cursor: pointer; }
+.cal-add > summary::-webkit-details-marker { display: none; }
+.cal-add .cal-menu { position: absolute; left: 0; bottom: calc(100% + 6px); z-index: 5; min-width: 180px;
+  display: flex; flex-direction: column; background: var(--color-bg); border: 1px solid var(--color-divider);
+  border-radius: 10px; box-shadow: var(--shadow-md); overflow: hidden; }
+.cal-add .cal-menu a { padding: 11px 14px; font-size: 14px; color: var(--color-text); text-decoration: none; }
+.cal-add .cal-menu a + a { border-top: 1px solid var(--color-divider); }
+.cal-add .cal-menu a:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }

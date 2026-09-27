@@ -205,10 +205,13 @@
         '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px">' + tagPills + '</div>' +
         '<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 68%,transparent);' +
         'margin:0">' + esc(ev.description || '') + '</p>' +
-        (ev.signupUrl
-          ? '<a class="reg-btn" href="' + esc(ev.signupUrl) + '" target="_blank" rel="noopener">' +
-            'Sign up <span class="arrow">→</span></a>'
-          : '') +
+        '<div class="ev-actions">' +
+          (ev.signupUrl
+            ? '<a class="reg-btn" href="' + esc(ev.signupUrl) + '" target="_blank" rel="noopener">' +
+              'Sign up <span class="arrow">→</span></a>'
+            : '') +
+          calButton(ev) +
+        '</div>' +
       '</div>';
 
     return '<article class="evcard rv evitem" data-cats="' + esc(cats) + '" data-ministry="' +
@@ -330,6 +333,64 @@
     if (!el) return false;
     return fill(el, upcomingOnly(events).map(eventCard).join(''));
   }
+
+  // ── Add to calendar ──────────────────────────────────────────────────
+  // Events have a start time only, so calendar entries assume 90 minutes.
+  var EVENT_MINUTES = 90;
+  function calStamp(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  function calTimes(ev) {
+    var start = parseDate(ev.startsAt);
+    return start ? {start: start, end: new Date(start.getTime() + EVENT_MINUTES * 60000)} : null;
+  }
+  function googleCalUrl(ev) {
+    var t = calTimes(ev); if (!t) return '';
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent((ev.title || '').trim() + ' \u2014 I AM Church') +
+      '&dates=' + calStamp(t.start) + '/' + calStamp(t.end) +
+      '&details=' + encodeURIComponent((ev.description || '') + '\n\nhttps://iamchurchofaz.com/events.html') +
+      '&location=' + encodeURIComponent(ev.location || '');
+  }
+  function icsText(ev) {
+    var t = calTimes(ev); if (!t) return '';
+    var clean = function (x) { return String(x || '').replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/([,;])/g, '\\$1'); };
+    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//I AM Church//Events//EN', 'BEGIN:VEVENT',
+      'UID:' + (ev._id || calStamp(t.start)) + '@iamchurchofaz.com',
+      'DTSTAMP:' + calStamp(new Date()), 'DTSTART:' + calStamp(t.start), 'DTEND:' + calStamp(t.end),
+      'SUMMARY:' + clean((ev.title || '').trim() + ' \u2014 I AM Church'),
+      'DESCRIPTION:' + clean(ev.description), 'LOCATION:' + clean(ev.location),
+      'URL:https://iamchurchofaz.com/events.html', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  }
+  var eventsById = {};
+  function calButton(ev) {
+    if (!calTimes(ev)) return '';
+    eventsById[ev._id] = ev;
+    return '<details class="cal-add">' +
+             '<summary class="reg-btn">Add to calendar</summary>' +
+             '<div class="cal-menu">' +
+               '<a href="' + esc(googleCalUrl(ev)) + '" target="_blank" rel="noopener">Google Calendar</a>' +
+               '<a href="#" data-ics="' + esc(ev._id) + '">Apple / Outlook</a>' +
+             '</div>' +
+           '</details>';
+  }
+  // Apple/Outlook: hand the browser a one-event .ics file to open.
+  document.addEventListener('click', function (e) {
+    // Close any open calendar menu when tapping elsewhere (or after picking).
+    [].slice.call(document.querySelectorAll('.cal-add[open]')).forEach(function (d) {
+      if (!d.contains(e.target) || (e.target.closest && e.target.closest('.cal-menu a'))) {
+        setTimeout(function () { d.removeAttribute('open'); }, 0);
+      }
+    });
+    var a = e.target.closest && e.target.closest('[data-ics]');
+    if (!a) return;
+    e.preventDefault();
+    var ev = eventsById[a.getAttribute('data-ics')]; if (!ev) return;
+    var blob = new Blob([icsText(ev)], {type: 'text/calendar;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var dl = document.createElement('a');
+    dl.href = url; dl.download = ((ev.title || 'event').trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase() || 'event') + '.ics';
+    document.body.appendChild(dl); dl.click(); dl.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  });
 
   // Homepage "What's coming up": the next three events, as compact rows that
   // mirror the page's .event-row markup. Each links to the full calendar.
