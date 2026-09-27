@@ -196,6 +196,14 @@ html { scroll-behavior: smooth; }
   * { animation: none !important; }
   .rv { opacity: 1; transform: none; transition: none; }
 }
+
+/* Home nav: fixed so it follows the scroll like the other pages' sticky nav.
+   Transparent with white text over the hero photo; once scrolled it becomes
+   the same cream bar with dark text as every other page. */
+.home-nav { transition: background-color .3s ease, box-shadow .3s ease, border-color .3s ease; border-bottom: 1px solid transparent; }
+.home-nav.is-scrolled { background: color-mix(in srgb, var(--color-bg) 92%, transparent) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--color-divider); }
+.home-nav.is-scrolled a { color: var(--color-text) !important; }
+.home-nav.is-scrolled a.abtn { color: #fff !important; background: var(--color-accent) !important; }
 </style>
 
 <style>
@@ -591,7 +599,7 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
 <div style="background:var(--color-bg);color:var(--color-text);min-height:100vh">
 
   <!-- ===================== HEADER ===================== -->
-  <nav class="topnav" style="display:flex;align-items:center;gap:28px;padding:18px clamp(20px,5vw,44px);position:absolute;top:0;left:0;right:0;z-index:5;background:transparent">
+  <nav class="topnav home-nav" style="display:flex;align-items:center;gap:28px;padding:18px clamp(20px,5vw,44px);position:fixed;top:0;left:0;right:0;z-index:20;background:transparent">
     <a href="#top" style="font-family:var(--font-heading);font-weight:600;letter-spacing:.2em;font-size:22px;color:#fff;text-decoration:none;margin-right:auto">I&nbsp;AM</a>
     <a class="undl" href="give.html" style="color:#fff;text-decoration:none;font-size:14px">Give</a>
     <a class="undl" href="groups.html" style="color:#fff;text-decoration:none;font-size:14px">Groups</a>
@@ -980,6 +988,24 @@ h1, h2, h3 { font-weight: var(--font-heading-weight); }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', sync);
     if (mqReduce.addEventListener) mqReduce.addEventListener('change', sync);
+  })();
+</script>
+<script>
+  // Home nav: switch to the solid bar once the page is scrolled; if the
+  // announcement bar is showing, sit below it until it scrolls away.
+  (function(){
+    var nav=document.querySelector('.home-nav'); if(!nav) return;
+    var bar=document.querySelector('[data-sanity="announcement"]');
+    function update(){
+      var y=window.scrollY||0;
+      nav.classList.toggle('is-scrolled', y>24);
+      var h=(bar && bar.style.display!=='none') ? bar.offsetHeight : 0;
+      nav.style.top=Math.max(0,h-y)+'px';
+    }
+    window.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update);
+    document.addEventListener('content:updated',update);
+    update();
   })();
 </script>
 <script src="micro.js" defer></script>
