@@ -250,9 +250,10 @@
                '<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;' +
                'color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:2px">' + meta + '</div>' +
                (g.signupUrl
-                 ? '<a class="abtn" href="' + esc(g.signupUrl) + '" style="margin-top:6px;align-self:flex-start;' +
-                   'font-size:13px;text-decoration:none;border:1px solid var(--color-accent);' +
-                   'color:var(--color-accent)">Join this group</a>'
+                 ? '<a class="abtn" href="' + esc(g.signupUrl) + '" target="_blank" rel="noopener" ' +
+                   'style="margin-top:6px;align-self:flex-start;font-family:var(--font-heading);font-weight:600;' +
+                   'font-size:14px;padding:11px 22px;border-radius:4px;text-decoration:none;' +
+                   'background:var(--color-accent);color:#fff">Register <span class="arrow">→</span></a>'
                  : '') +
              '</div>' +
            '</article>';
